@@ -1,0 +1,141 @@
+{% extends 'myadmin/index.html' %}
+{% block title %}
+<title>后台分类</title>
+{% endblock %}
+
+{% block con %}
+<link rel="stylesheet" href="/static/myadmin/assets/css/fontcss.css">
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>商品分类 </h2>
+                <br>
+                <form>
+                <ul class="nav navbar-right panel_toolbox">
+                    <div class="btn-group  btn-group-sm">
+                        <a href="{% url 'myadmin_cate_add' %}" class="btn btn-default">新增</a>
+                        <a class="btn btn-default" >删除</a>
+                    </div>
+                </ul>
+                <div class="nav navbar-right panel_toolbox">
+                    <div class=" col-md-3 col-sm-12 col-xs-12 form-group form-group pull-right top_search">
+                        <div class="input-group">
+                            <input type="text" name="keywords" value="{{ request.GET.keywords }}" class="form-control" 
+                            placeholder="搜索...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Go!</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-9 col-xs-12 pull-right">
+                        <select class="form-control" name="types" data-am-selected="{btnSize: 'sm'}" >
+                            <option value="all" {% if request.GET.types == 'all' %} selected {% endif %}>全局搜索</option>
+                            <option value="id" {% if request.GET.types == 'id' %} selected {% endif %}>ID</option>
+                            <option value="name" {% if request.GET.types == 'name' %} selected {% endif %}>名字</option>
+                        </select>
+                    </div>  
+                </div>
+                </form>  
+            </div>
+            <span class="pull-left" style="color:#ccc;">双击分类名可进行修改</span>
+            <div class="x_content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>分类名</th>
+                            <th>所属父级</th>
+                            <th>该类下的商品数量</th>
+                            <th>Path路径</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for v in catelist %}
+
+                        <tr class="fontcss">
+                            <td scope="row">{{ v.id }}</td>
+                            <td class="cate_name">
+                                {{v.sub}} <span cid="{{v.id}}">{{v.name}}</span>
+                            </td>
+                            <td>{{ v.pname }}</td>
+                            <td>{{ v.goods_set.count|default:'无' }}</td>
+                            <td>{{ v.path }}</td>
+                            <td>
+                                <div>
+                                    <a class="removeCate btn btn-xs btn-danger" cid="{{ v.id }}" href="javascript:void(0)">
+                                        <i class="fa fa-trash"></i> 删除
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+                
+                
+                <div class="btn-group pull-right">
+                    <!-- <button class="btn btn-info" type="button">1</button>
+                    <button class="btn btn-info active" type="button">2</button> -->
+                    <ul class="pagination">
+                        {% load pagetag %}
+
+                        {% ShowsPage catelist.paginator.num_pages request%}
+                    </ul>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+   $('.cate_name').dblclick(function(){
+        var span=$(this).find('span')
+        // 获取当前分类名字
+        var catename=$(this).find('span').text()
+        // 创建一个input
+        var inp=$('<input type="text" value="'+catename+'" style="color:black;"></input>')
+        // 把分类名换成input
+        $(this).find('span').html(inp)
+        inp.select()
+
+        // 获取当前选择元素的分类 id
+        var cid=span.attr('cid')
+
+        // 给input绑定丧失焦点时间，判断是否更新了name，发送ajax
+        inp.blur(function(){
+            var newname= $(this).val()
+            if(newname== catename){
+                span.html(catename)
+            }else{
+                // 需要发送ajax去更新
+                $.get('{% url 'myadmin_cate_edit' %}',{'cid':cid,'newname':newname},function(data){
+                    // 判断是否更新成功
+                    if(data['code']==0){
+                        span.html(newname)
+                        alert(data['msg'])
+                    }
+                })
+            }
+        })
+
+    })
+
+    $('.removeCate').click(function(){
+        //  获取当前的元素的值
+        var cid= $(this).attr('cid');
+        var a=$(this)
+        // 发送ajax请求
+        $.get('{%url 'myadmin_cate_del'%}',{'cid':cid},function(data){
+            if(data['code'] == 0){
+                //删除成功
+               a.parents('tr').remove()
+            }
+            alert(data['msg'])
+        },'json')
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'myhome/Users/personal.html' %}
+
+{% block title %}
+<title>地址管理</title>
+{% endblock %}
+
+{% block content %}
+<div class="member-right fr">
+	<div class="member-head">
+	    <div class="member-heels fl"><h2>地址管理</h2></div>
+	</div>
+	<div class="member-border">
+	    <div class="member-newly"><b>新增收货地址</b>您已经创建了<i class="reds">{{count}}</i>个收货地址了，最多可创建<i class="reds">20</i>个</div>
+	    {% for v in ob %}
+	    <div class="member-sites">
+	        <ul>
+	            <li class="clearfix">
+	            	<div class="default fl">
+	                {% if v.status == 0 %} 
+	                默认地址
+	                {% endif %}
+	                </div> 
+	                <div class="user-info1 fl clearfix">
+	                    <div class="user-info">
+	                        <span class="info1">收货人：</span>
+	                        <span class="info2">{{v.name}}</span>
+	                    </div>
+	                    <div class="user-info">
+	                        <span class="info1">地址：</span>
+	                        <span class="info2">{{v.address}}</span>
+	                    </div>
+	                    <div class="user-info">
+	                        <span class="info1">手机：</span>
+	                        <span class="info2">{{v.phone}}</span>
+	                    </div>
+	                </div>
+
+	                <div class="pc-event">
+	                    <a href="{% url 'myhome_address_def' %}?uid={{v.uid}}" {% if v.status == 0 %} class="pc-event-d" {% endif%}>设为默认地址</a>
+	                    <a href="{% url 'myhome_address_edit' %}?vid={{v.id}}">编辑 </a>
+	                    <a href="{% url 'myhome_address_del' %}?vid={{v.id}}">删除</a>
+	                </div>
+	            </li>
+	        </ul>
+	    </div>
+	    {% endfor %}
+	    <div class="member-pages clearfix">
+            <div class="fr pc-search-g">
+                    <a href="#" class="fl pc-search-f">上一页</a>
+                    <a class="current" href="#">1</a>
+                    <a href="javascript:;">2</a>
+                    <a href="javascript:;">3</a>
+                    <a href="javascript:;">4</a>
+                    <a href="javascript:;">5</a>
+                    <a href="javascript:;">6</a>
+                    <a href="javascript:;">7</a>
+                    <span class="pc-search-di">…</span>
+                    <a onclick="SEARCH.page(3, true)" href="javascript:;" class="pc-search-n" title="使用方向键右键也可翻到下一页哦！">下一页</a>
+                <span class="pc-search-y">
+                    <em>  共20页    到第</em>
+                    <input type="text" placeholder="1" class="pc-search-j">
+                    <em>页</em>
+                    <a class="confirm" href="#">确定</a>
+                </span>
+            </div>
+	    </div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'myadmin/index.html' %}
+{% block title %}
+<title>后台商品列表</title>
+{% endblock %}
+
+{% block con %}
+<link rel="stylesheet" href="/static/myadmin/assets/css/fontcss.css">
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>商品列表 </h2>
+                <form>
+                <ul class="nav navbar-right panel_toolbox">
+                    <div class="btn-group  btn-group-sm">
+                        <a href="{% url 'myadmin_goods_add' %}" class="btn btn-default">新增</a>
+                        <a class="btn btn-default" >删除</a>
+                    </div>
+                </ul>
+                <div class="nav navbar-right panel_toolbox">
+                    <div class=" col-md-3 col-sm-12 col-xs-12 form-group form-group pull-right top_search">
+                        <div class="input-group">
+                            <input type="text" name="keywords" value="{{ request.GET.keywords }}" class="form-control" 
+                            placeholder="搜索...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Go!</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-9 col-xs-12 pull-right">
+                        <select class="form-control" name="types" data-am-selected="{btnSize: 'sm'}" >
+                            <option value="all" {% if request.GET.types == 'all' %} selected {% endif %}>全局搜索</option>
+                            <option value="id" {% if request.GET.types == 'id' %} selected {% endif %}>ID</option>                            
+                            <option value="goodsname" {% if request.GET.types == 'goodsname' %} selected {% endif %}>商品名</option>
+                            <option value="title" {% if request.GET.types == 'title' %} selected {% endif %}>标题</option>
+                        </select>
+                    </div>  
+                </div>
+                </form>  
+            </div>
+            
+            <div class="x_content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>缩略图</th>
+                            <th>商品名</th>
+                            <th>标题</th>
+                            <th>所属分类</th>
+                            <th>价格</th>
+                            <th>库存</th>
+                            <th>销量</th>
+                            <th>点击量</th>
+                            <th>状态</th>
+                            <th>注册时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for v in goodslist %}
+
+                        <tr>
+                            <td scope="row">{{ v.id }}</td>
+                            <td>
+                                <img src="{{ v.pic_url }}" width="100" alt="">
+                            </td>
+                            <td style="width:100px;">{{ v.goodsname  }}</td>
+                            <td style="width:100px;overflow:hidden;">{{ v.title }}</td>
+                            <td>{{ v.cateid.name }}</td>
+                            <td>{{ v.price  }}</td>
+                            <td>{{ v.goodsnum }}</td>
+                            <td>{{ v.ordernum }}</td>
+                            <td>{{ v.clicknum }}</td>
+                            <td>
+                                {% if v.status == 0 %}
+                                    新品
+                                {% elif v.status == 1 %}
+                                    推荐
+                                {% elif v.status == 2 %}
+                                    下架
+                                {% endif %}
+                            </td>
+                            <td>{{ v.addtime }}</td>
+                            <td>
+                                <div>
+                                    <a class="btn btn-xs btn-dark" href="{% url 'myadmin_goods_edit' %}?uid={{ v.id }}">
+                                        <i class="fa fa-pencil"></i> 编辑
+                                    </a>
+                                    <a class="btn btn-xs btn-danger removeCate" href="javascript:void(0)" cid="{{ v.id }}" ordernum="{{ v.ordernum }}">
+                                        <i class="fa fa-trash"></i> 删除
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+                
+                
+                <div class="btn-group pull-right">
+                    <!-- <button class="btn btn-info" type="button">1</button>
+                    <button class="btn btn-info active" type="button">2</button> -->
+                    <ul class="pagination">
+                        {% load pagetag %}
+
+                        {% ShowsPage goodslist.paginator.num_pages request%} 
+                     </ul>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    $('.select-status').change(function () {
+        // 获取当前的元素的值
+        var status = $(this).val()
+        // 获取当前元素的 id
+        var uid = $(this).attr('uid')
+
+        //发送ajax请求
+        $.get('{%url 'myadmin_user_set_status'%}', {
+                'uid': uid,
+                'status': status
+            },
+            function (data) {
+                if (data['code'] == 0) {
+                    alert(data['msg'])
+                }
+            }, 'json')
+    })
+    
+    $('.removeCate').click(function(){
+        //  获取当前的元素的值
+        var cid= $(this).attr('cid');
+        var ordernum= $(this).attr('ordernum');
+
+        var a=$(this)
+        // 发送ajax请求
+        $.get('{%url 'myadmin_goods_del'%}',{'cid':cid,'ordernum':ordernum},function(data){
+            if(data['code'] == 0){
+                //删除成功
+               a.parents('tr').remove()
+            }
+            alert(data['msg'])
+        },'json')
+    })
+</script>
+{% endblock %}

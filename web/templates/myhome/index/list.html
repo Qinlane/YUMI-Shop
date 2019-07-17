@@ -1,0 +1,153 @@
+{% extends 'myhome/index.html' %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block header%}
+
+{% endblock %}
+
+{% block banner %}
+
+{% endblock %}
+
+{% block con %}
+<div class="containers">
+    <div class="pc-nav-item"><a href="{% url 'myhome_all_list' %}">全部分类 </a> &gt; 
+        <a href="#">{{ Cateslist.name }}</a>
+    </div>
+</div>
+<div class="containers clearfix">
+    <div class="fl">
+        <div id="firstpane" class="menu_list">
+            <h2>所有类目</h2>
+            {% for v in alllist %}
+            <h3 class="menu_head current">{{ v.name }}</h3>
+                <div style="display:block" class="menu_body">
+                {% for vv in v.ssb %}
+                    <a href="{% url 'myhome_list' vv.id %}">{{ vv.name }}</a>
+                {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="pc-info fr">
+        <div class="pc-term">
+            <dl class="pc-term-dl clearfix">
+                <dt>品牌：</dt>
+                {% for v in Cateslist.goods %}
+                    <dd><a href="#">{{ v.brand }}</a></dd>
+                {% endfor %}
+            </dl>
+            <dl class="pc-term-dl clearfix">
+                <dt>{{Cateslist.name}}：</dt>
+                {% for v in Cateslist.sub %}
+                <dd><a href="">{{ v.name }}</a></dd>
+                {% endfor %}
+            </dl>
+            <div class="pc-line"></div>
+            <div class="pc-search clearfix">
+                <div class="fl pc-search-in">
+                    <input type="text" class="pc-search-w">
+                    <input type="text" class="pc-search-s" placeholder="￥">
+                    <input type="text" class="pc-search-s" placeholder="￥">
+                    <a href="#" class="pc-search-a">搜索</a>
+                </div>
+                {% comment %} <div class="fr pc-with">
+                    相关搜索： <a href="#">黑糖</a><em>|</em><a href="#">姜茶</a><em>|</em><a href="#">红印黑糖</a><em>|</em><a href="#">黑糖话梅</a><em>|</em><a href="#">黑糖姜母</a><em>|</em><a href="#">茶黑糖饼</a><em>|</em><a href="#">干黑糖</a><em>|</em><a href="#">沙琪玛</a>
+                </div> {% endcomment %}
+            </div>
+        </div>
+        <div class="pc-term">
+            <div class="clearfix pc-search-p">
+                <div class="fl pc-search-e"><a href="#" class="cur">销量</a><a href="#">价格</a><a href="#">评价</a><a href="#">上架时间</a></div>
+                <div class="fr pc-search-v">
+                    <ul>
+                        <li><input type="checkbox"><a href="#">有货</a> </li>
+                        <li><input type="checkbox"><a href="#">限时抢购</a> </li>
+                        <li><input type="checkbox"><a href="#">满减大促</a> </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pc-search-i">
+                <div class="fr">
+                    <span class="pc-search-t"><b>1</b><em>/</em><i>32</i></span>
+                    <a href="#" class="pc-search-d">上一页</a>
+                    <a href="#">下一页</a>
+                </div>
+            </div>
+        </div>
+        <div class="time-border-list pc-search-list clearfix">
+            <ul class="clearfix">
+                {% for v in Cateslist.goods %}
+                <li>
+                    <div style="margin:0 auto;">
+                        <a href="{% url 'myhome_info' %}?goodsid={{ v.id }}"> <img src="{{ v.pic_url }}" height="200" style="margin:0 auto;"></a>
+                        <p class="head-name"><a href="{% url 'myhome_info' %}?goodsid={{ v.id }}">{{ v.goodsname }}</a> </p>
+                        <p><span class="price">￥{{ v.price}}</span></p>
+                        <p class="head-futi clearfix"><span class="fl">好评度：90% </span> <span class="fr">{{ v.ordernum }}人购买</span></p>
+                        <p class="clearfix"><span class="label-default fl">收藏</span> <a href="#" class="fr pc-search-c">加入购物车</a> </p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="clearfix">
+                <div class="fr pc-search-g">
+                    <a class="fl pc-search-f" href="#">上一页</a>
+                    <a href="#" class="current">1</a>
+                    <a href="javascript:;">2</a>
+                    <a href="javascript:;">3</a>
+                    <a href="javascript:;">4</a>
+                    <a href="javascript:;">5</a>
+                    <a href="javascript:;">6</a>
+                    <a href="javascript:;">7</a>
+                    <span class="pc-search-di">…</span>
+                    <a title="使用方向键右键也可翻到下一页哦！" class="pc-search-n" href="javascript:;" onclick="SEARCH.page(3, true)">下一页</a>
+                    <span class="pc-search-y">
+                        <em>  共20页    到第</em>
+                        <input type="text" class="pc-search-j" placeholder="1">
+                        <em>页</em>
+                        <a href="#" class="confirm">确定</a>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+        <div class="pc-search-re clearfix">
+            <dl>
+                <dt>重新搜索</dt>
+                <dd>
+                    <input type="text" value="三星" id="key-re-search" class="text">
+                    <input type="button" value="搜&nbsp;索" id="btn-re-search" class="button">
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<div class="pc-buying clearfix"></div>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $("#firstpane .menu_body:eq(0)").show();
+    $("#firstpane h3.menu_head").click(function(){
+        $(this).addClass("current").next("div.menu_body").slideToggle(300).siblings("div.menu_body").slideUp("slow");
+        $(this).siblings().removeClass("current");
+    });
+
+    $("#secondpane .menu_body:eq(0)").show();
+    $("#secondpane h3.menu_head").mouseover(function(){
+        $(this).addClass("current").next("div.menu_body").slideDown(500).siblings("div.menu_body").slideUp("slow");
+        $(this).siblings().removeClass("current");
+    });
+
+});
+</script>
+{% endblock %}
+
+{% block jsbanner %}
+{% endblock %}
+
+

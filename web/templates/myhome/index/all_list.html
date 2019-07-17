@@ -1,0 +1,60 @@
+{% extends 'myhome/index.html' %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block header%}
+
+{% endblock %}
+
+{% block banner %}
+
+{% endblock %}
+
+{% block con %}
+<div class="containers clearfix">
+    <div class="pc-nav-item fl"><a href="{% url 'myhome_index' %}" class="pc-title">首页</a> &gt;<a href="{% url 'myhome_all_list' %}" > 所有货架</a></div>
+    <div class="fr" style="padding-top:20px;"><a href="{% url 'myhome_all_list' %}" class="reds">所有品牌&gt;</a></div>
+</div>
+<div class="containers">
+    <div class="pc-nav-rack clearfix">
+        <ul>
+        {% for v in alllist %}
+            {% for i in v.ssb %}
+            <li><a href="{% url 'myhome_list' i.id %}}">{{ i.name }}</a></li>        
+            {% endfor %}        
+        {% endfor %}        
+        </ul>
+    </div>
+
+    {% for i in alllist %}
+    <div>
+        {% for ii in i.ssb %}
+        {% for iii in ii.oub %}
+        <div class="pc-nav-title">
+            <h3>{{ iii.name }}</h3>
+        </div>
+        <div class="pc-nav-digit clearfix">
+            <ul>
+                {% for iiii in iii.goods_set.all %}
+                <li>
+                    <div class="digit1"><a href="{% url 'myhome_info' %}?goodsid={{ iiii.id }}"><img src="{{ iiii.pic_url }}" width="130" height="150"></a></div>
+                    <div class="digit2"><a href="{% url 'myhome_info' %}?goodsid={{ iiii.id }}">{{ iiii.goodsname }}</a></div>
+                </li>
+                {% endfor %}
+               
+            </ul>
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+   
+</div>
+
+<div class="pc-buying clearfix"></div>
+{% endblock %}
+
+
+

@@ -1,0 +1,154 @@
+{% extends 'myadmin/index.html' %}
+
+{% block title %}
+<title>后台会员添加</title>
+{% endblock %}
+
+
+{% block con %}
+<link href="/static/myadmin/assets/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>会员添加</h3>
+        </div>
+
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+
+                <form class="form-horizontal form-label-left "
+                    action="{% url 'myadmin_user_insert' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <span class="section">会员信息填写</span>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">昵称 <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input name="nikename" class="form-control col-md-7 col-xs-12"
+                                data-validate-length-range="6" data-validate-words="2" placeholder="请输入昵称"
+                                required="required" type="text">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">密码 <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input name="password" class="form-control col-md-7 col-xs-12"
+                                data-validate-length-range="6" data-validate-words="2" placeholder="请输入密码"
+                                required="required" type="password">
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="email" name="email" required="required" class="form-control col-md-7 col-xs-12"
+                                placeholder="请输入email">
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">手机号 <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="number" name="phone" required="required" data-validate-minmax="10,100"
+                                class="form-control col-md-7 col-xs-12" placeholder="请输入手机号">
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            年龄
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input name="age" class="form-control col-md-7 col-xs-12" data-validate-length-range="6"
+                                data-validate-words="2" placeholder="请输入年龄" required="required" type="text">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            性别
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="0"> 女
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="1"> 男
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            头像
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <img id="showImg" src="/static/myadmin/assets/img/img.jpg" alt="..." width="200" class="img-rounded">
+                            <!-- <input 
+                            class="input-css " id="ReadFile" name="pic" type="file"> -->
+                            <link rel="stylesheet" href="/static/myadmin/assets/css/inputcss.css">
+                            <br>
+                            <a href="javascript:;" class="file"><i class="fa fa-folder-open"></i> 选择文件    
+                            <input  id="ReadFile" name="pic" type="file" class="file form-control" 
+                                onkeydown="return false;" onpaste="return false;" 
+                                placeholder="Select file...">
+                            </a>
+                        </div>
+                    </div>
+
+                    <script type="text/javascript">
+                        $('#ReadFile').change(function(){
+                            var file = this.files[0];
+
+                            //限定上传文件的类型，判断是否是图片类型
+                            if (!/image\/\w+/.test(file.type)) {
+                                alert("只能选择图片");
+                                return false;
+                            }
+                            var reader = new FileReader();
+                            reader.readAsDataURL(file);
+                            reader.onload = function(e) {
+                                base64Code = this.result;
+                                //把得到的base64赋值到img标签显示
+                                $("#showImg").attr("src", base64Code);
+                            }
+                        })
+                    </script>
+                    
+
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button id="send" type="submit" class="btn  btn-primary">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
