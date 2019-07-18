@@ -164,21 +164,21 @@
                         </div>
                         <div class="pc-size">
                             <div class="attrdiv pc-telling clearfix">
-                                <div class="pc-version">尺码</div>
-                                <div class="pc-adults">
+                                <div class="pc-version" >尺码</div>
+                                <div class="pc-adults"  id="sizes">
                                     <ul>
                                         {% for v in goods.sizes  %}
-                                        <li><a href="javascript:void(0);">{{ v }}</a> </li>
+                                        <li><a href="javascript:void(0);" title="{{ v }}">{{ v }}</a> </li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                             </div>
                             <div class="attrdivs pc-telling clearfix">
                                 <div class="pc-version">颜色分类</div>
-                                <div class="pc-adults">
+                                <div class="pc-adults" id="color">
                                     <ul>
                                         {% for v in goods.color  %}
-                                        <li><a href="javascript:void(0);" title="{{ v }}">{{ v }}</a> </li>
+                                        <li><a href="javascript:void(0);" title="{{ v }}" >{{ v }}</a> </li>
                                         {% endfor %}
 
                                     </ul>
@@ -592,6 +592,10 @@
 </section>
 <!-- 商品详情 End -->
 <script>
+
+
+
+
     // 绑定加入购物车事件
 $('#JoinB').click(function(){
     // 检测是否登录
@@ -600,14 +604,43 @@ $('#JoinB').click(function(){
         alert('请先登录！');
         location.href="/login/";
     };
-    // 获取 商品id  获取数量
-    var data = {}
-    data.goodsid = {{ goods.id }};
-    data.num = $('#subnum').val();
-    // 发送AJAX 加入购物车
-    $.get('{% url 'myhome_cart_add' %}',data,function(data){
-        alert(data['msg'])
-    },'json')
+    var color = null; 
+    var sizes = null; 
+
+    $('#sizes a').each(function(){
+        var cur = $(this).attr('class');
+        if (cur){
+            sizes = $(this).text();
+        }
+    })
+
+    $('#color a').each(function(){
+        var cur = $(this).attr('class');
+        if (cur){
+            color = $(this).text();
+        }
+    })
+    // 获取 商品id 尺码 颜色  获取数量
+    var data = {};
+    
+    console.log(color)
+    console.log(sizes)
+
+    if(color != null && sizes  != null){
+        data.goodsid = {{ goods.id }};
+        data.num = $('#subnum').val();
+        data.color = color;
+        data.sizes = sizes;
+        // 发送AJAX 加入购物车
+        $.get('{% url 'myhome_cart_add' %}',data,function(data){
+            alert(data['msg'])
+        },'json')
+    }else{
+        alert('请选择商品尺码和颜色');
+    }
+
+
+    
 })
 
 </script>

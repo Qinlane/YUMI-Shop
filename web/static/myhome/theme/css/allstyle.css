@@ -1,0 +1,24 @@
+.text-h td{text-align: center;}
+.text-h th{text-align: center;}
+.mtop{margin-top:25px;}
+.mtop a:hover{color:orange !important;}
+
+.checkbox{
+    display: none;
+    width: 20px;
+    height: 20px;
+}
+
+/* .checkbox input[type='checkbox']{
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    -webkit-appearance:none;
+    border: 1px solid #c9c9c9;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+.checkbox input[type=checkbox]:checked{
+    background: url("/img/checkedbox.png")no-repeat center;
+} */

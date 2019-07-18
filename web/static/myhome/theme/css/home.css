@@ -412,7 +412,7 @@ body{min-width: 1200px; _width:expression(document.documentElement.clientWidth>1
 .pc-time-item  .pc-clear-sr {background:none; color:#8c8c8c; font-weight:bold; font-size:24px; width:5px;}
 
 
-.menu{height:35px;width:100px; line-heigh:35px;position:relative;}
+.menu{height:35px;width:110px; line-heigh:35px;position:relative;}
 .menu a{display:block;height:35px;line-height:35px;padding:0 0 0 10px; }
 .menu a:hover { background:#ea4949; color:#fff;}
 .menu a.tit{background:url(../icon/arrow.gif) no-repeat;background-position:75px 15px; }
@@ -430,7 +430,7 @@ body{min-width: 1200px; _width:expression(document.documentElement.clientWidth>1
 #pc-nav1 .subnav a:hover { width:135px; height:135px; display:block; padding-top:10px; background:none;}
 
 .pc-order-titlei h2 { padding-top:20px; font-size:20px; }
-.pc-step-title      { padding-top:15px; padding-left:50px;}
+.pc-step-title      { padding-top:40px; padding-left:20px;}
 .pc-step-title ul li   { float:left; width:275px; height:24px; line-height:24px; display:inline-block; text-align:center; background:url("../icon/step2.png") no-repeat center;}
 .pc-step-title ul li a { float:left; width:275px; height:24px; line-height:24px; display:inline-block; text-align:center; color:#fff; font-size:14px;}
 .pc-step-title ul .cur { float:left; width:275px; height:24px; line-height:24px; display:inline-block; text-align:center; background:url("../icon/step.png") no-repeat center;}
