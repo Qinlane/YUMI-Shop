@@ -20,24 +20,26 @@ def myhome_address(request):
 
 # 设为默认地址
 def myhome_address_def(request):
+    id = request.GET.get('id')
     uid = request.GET.get('uid')
-    print(uid)
+    print(uid,id)
     Address.objects.filter(uid=uid).update(status=1)
-    # Address.objects.filter(id=vid).update(status=0)
+    Address.objects.filter(id=id).update(status=0)
     return HttpResponse('<script>alert("设置成功");location.href="/address/";</script>')
 
 # 编辑收货地址页面
 def myhome_address_edit(request):
     vid = request.GET.get('vid')
-    context = {'vid':vid}
+    data = Address.objects.filter(id=vid)
+    context = {'data':data}
     return render(request,'myhome/Users/edit.html',context)
 
 # 执行编辑操作
 def myhome_address_doedit(request):
-    vid = request.GET.get('vid')
+    id = request.GET.get('id')
     data = request.POST.dict()
     data.pop('csrfmiddlewaretoken')
-    Address.objects.filter(id=vid).update(name=data['name'],address=data['address'],phone=data['phone'])
+    Address.objects.filter(id=id).update(name=data['name'],address=data['address'],phone=data['phone'])
     return HttpResponse('<script>alert("编辑成功");location.href="/address/";</script>')
 
 # 删除收货地址

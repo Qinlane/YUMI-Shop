@@ -1,11 +1,62 @@
-{% extends 'myhome/Users/personal.html' %}
+{% extends 'myhome/index.html' %}
 
 {% block title %}
-<title>地址管理</title>
+<title>个人中心</title>
 {% endblock %}
 
-{% block content %}
-<div class="member-right fr">
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/member.css">
+{% endblock %}
+
+{% block header%}
+
+{% endblock %}
+
+{% block der %}
+
+{% endblock%}
+
+{% block banner %}
+
+{% endblock %}
+
+{% block con %}
+<div class="containers"><div class="pc-nav-item"><a href="#">首页</a> &gt; <a href="#">会员中心 </a> &gt; <a href="#">商城快讯</a></div></div>
+
+<!-- 商城快讯 begin -->
+<section id="member">
+    <div class="member-center clearfix">
+        <div class="member-left fl">
+            <div class="member-apart clearfix">
+                <div class="fl"><a href="#"><img src="{{ request.session.VipUser.pic_url }}"></a></div>
+                <div class="fl">
+                    <p>用户名：</p>
+                    <p><a href="#">{{ request.session.VipUser.nikename }}</a></p>
+                    
+                </div>
+            </div>
+            <div class="member-lists">
+                <dl>
+                    <dt>我的商城</dt>
+                    <dd><a href="#">个人信息</a></dd>
+                    <dd><a href="#">我的订单</a></dd>
+                    <dd><a href="#">我的收藏</a></dd>
+                    <dd><a href="#">我的评价</a></dd>
+                    <dd><a href="{% url 'myhome_address' %}">地址管理</a></dd>
+                </dl>
+                <dl>
+                    <dt>客户服务</dt>
+                    <dd><a href="#">退货申请</a></dd>
+                    <dd><a href="#">退货/退款记录</a></dd>
+                </dl>
+                <dl>
+                    <dt>我的消息</dt>
+                    <dd class="cur"><a href="#">商城快讯</a></dd>
+                    <dd><a href="#">帮助中心</a></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="member-right fr">
 	<div class="member-head">
 	    <div class="member-heels fl"><h2>地址管理</h2></div>
 	</div>
@@ -36,7 +87,7 @@
 	                </div>
 
 	                <div class="pc-event">
-	                    <a href="{% url 'myhome_address_def' %}?uid={{v.uid}}" {% if v.status == 0 %} class="pc-event-d" {% endif%}>设为默认地址</a>
+	                    <a href="{% url 'myhome_address_def' %}?uid={{v.uid}}&id={{v.id}}" {% if v.status == 0 %} class="pc-event-d" {% endif%}>设为默认地址</a>
 	                    <a href="{% url 'myhome_address_edit' %}?vid={{v.id}}">编辑 </a>
 	                    <a href="{% url 'myhome_address_del' %}?vid={{v.id}}">删除</a>
 	                </div>
@@ -64,6 +115,12 @@
                 </span>
             </div>
 	    </div>
-	</div>
-</div>
+			</div>
+		</div>    
+    </div>
+</section>
 {% endblock %}
+
+{% block jsbanner %}
+{% endblock %}
+

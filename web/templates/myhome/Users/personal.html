@@ -1,5 +1,9 @@
 {% extends 'myhome/index.html' %}
 
+{% block title %}
+<title>个人中心</title>
+{% endblock %}
+
 {% block css %}
 <link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/member.css">
 {% endblock %}
@@ -8,14 +12,16 @@
 
 {% endblock %}
 
+{% block der %}
+
+{% endblock%}
+
 {% block banner %}
 
 {% endblock %}
 
 {% block con %}
 <div class="containers"><div class="pc-nav-item"><a href="#">首页</a> &gt; <a href="#">会员中心 </a> &gt; <a href="#">商城快讯</a></div></div>
-
-<!-- 商城快讯 begin -->
 <section id="member">
     <div class="member-center clearfix">
         <div class="member-left fl">
@@ -48,8 +54,6 @@
                 </dl>
             </div>
         </div>
-
-        {% block content %}
         <div class="member-right fr">
             <div class="member-border">
                <div class="member-secure clearfix">
@@ -66,9 +70,7 @@
                    </div>
                </div>
             </div>
-        </div>
-        {% endblock %}
-        
+        </div>    
     </div>
 </section>
 {% endblock %}
