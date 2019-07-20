@@ -4,6 +4,15 @@ from django.utils.html import format_html
 from django.urls import reverse
 from myadmin.models import Cates
 
+
+# 自定义乘法运算标签
+@register.simple_tag
+def Product(var1,var2):
+    res = float(var1) * float(var2)
+
+    return '%.2f'%res
+
+
 @register.simple_tag
 def ShowsPage(count,request):
     # count  总页数

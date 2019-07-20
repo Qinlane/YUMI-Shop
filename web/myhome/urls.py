@@ -41,10 +41,14 @@ urlpatterns = [
     url(r'address/del/$', PersonalViews.myhome_address_del, name="myhome_address_del"),
 
     # 购物车  增删改查 
-    url(r'^cart/add/',CartViews.myhome_cart_add,name="myhome_cart_add"),
     url(r'^cart/index/',CartViews.myhome_cart_index,name="myhome_cart_index"),
+    # 添加
+    url(r'^cart/add/',CartViews.myhome_cart_add,name="myhome_cart_add"),
+    # 删除
     url(r'^cart/del/',CartViews.myhome_cart_del,name="myhome_cart_del"),
+    # 清空
     url(r'^cart/clear/',CartViews.myhome_cart_clear,name="myhome_cart_clear"),
+    # 编辑
     url(r'^cart/edit/',CartViews.myhome_cart_edit,name="myhome_cart_edit"),
     
 

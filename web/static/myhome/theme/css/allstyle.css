@@ -1,24 +1,41 @@
-.text-h td{text-align: center;}
-.text-h th{text-align: center;}
-.mtop{margin-top:25px;}
-.mtop a:hover{color:orange !important;}
+.text-h td {
+    text-align: center;
+}
 
-.checkbox{
+.text-h th {
+    text-align: center;
+}
+
+.mtop {
+    margin-top: 25px;
+}
+
+.mtop a:hover {
+    color: orange !important;
+}
+
+.checkbox {
     display: none;
     width: 20px;
     height: 20px;
 }
 
-/* .checkbox input[type='checkbox']{
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    -webkit-appearance:none;
-    border: 1px solid #c9c9c9;
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
+.table-bordered>tbody>tr>td,
+.table-bordered>tbody>tr>th,
+.table-bordered>tfoot>tr>td,
+.table-bordered>tfoot>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>thead>tr>th {
+    border: none !important;
 }
-.checkbox input[type=checkbox]:checked{
-    background: url("/img/checkedbox.png")no-repeat center;
-} */
+
+.cai{
+    height: 156px;
+}
+.fs1{
+    width: 100%;
+    font-size: 18px;
+    color: #ccc;
+    text-align: center;
+    line-height: 136px;
+}

@@ -50,7 +50,8 @@ class Goods(models.Model):
 class Cart(models.Model):
     #  id 用户 uid 商品 goodsid 数量 num
     uid = models.ForeignKey(to="Users",to_field="id",on_delete=models.CASCADE)
-    color = models.CharField(max_length=11,default="")
+    color = models.CharField(max_length=20,default="")
     sizes = models.CharField(max_length=20,default="")
     goodsid = models.ForeignKey(to="Goods",to_field="id",on_delete=models.CASCADE)
     num = models.IntegerField()
+    lengths = models.IntegerField(default=1)

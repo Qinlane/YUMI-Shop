@@ -1,0 +1,74 @@
+{% extends 'myhome/index.html' %}
+
+{% block title %}
+<title>我的购物车</title>
+{% endblock %}
+
+{% block css %}
+<!-- Font Awesome -->
+<link href="/static/myadmin/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<link href="/static/myadmin/assets/nprogress/nprogress.css" rel="stylesheet">
+<link href="/static/myadmin/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/myadmin/assets/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="/static/myadmin/assets/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="/static/myadmin/assets/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="/static/myadmin/assets/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="/static/myadmin/assets/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="/static/myadmin/assets/iCheck/skins/flat/green.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/myhome/theme/css/allstyle.css">
+
+
+{% endblock %}
+
+{% block ordertop %}
+<div class="container clearfix">
+    <div class="header-logo fl" style="width:212px;">
+        <h1><a href="{% url 'myhome_index' %}"><img src="/static/myhome/theme/icon/logo.png" height="70"></a></h1>
+    </div>
+    <div class="pc-order-titlei fl" style="margin-top:5px;">
+        <h2>填写订单</h2>
+    </div>
+    <div class="pc-step-title fl">
+        <ul>
+            <li class="cur"><a href="#">1 . 我的购物车</a></li>
+            <li class="cur2"><a href="#">2 . 填写核对订单</a></li>
+            <li class="cur2"><a href="#">3 . 成功提交订单</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block yHeader %}
+
+{% endblock %}
+
+{% block banner %}
+{% endblock %}
+
+{% block con %}
+<!-- 页面内容 -->
+<section>
+    <div class="containers">
+        <div class="pc-space">
+            <div class="pc-order-title clearfix"><h3 class="fl">猜你喜欢</h3></div>
+            <div class="pc-border cai">
+                <div class="pc-order-text clearfix">
+                    <ul class=" clearfix">
+                        <li class="clearfix fl fs1">
+                                暂无商品向您推荐
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block jsbanner %}
+
+{% endblock %}

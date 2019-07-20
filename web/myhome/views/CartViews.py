@@ -27,16 +27,31 @@ def myhome_cart_add(request):
             cart = Cart.objects.get(id=ob[0].id)
             num=int(data['num'])
             cart.num += num
-            for v in range(1,num+1):
-                cart.sizes+=(','+data['sizes'])
-                cart.color+=(','+data['color'])
-            cart.save()
+            lengths=int(data['lengths'])
+            if(lengths>1):
+                cart.sizes+=((','+data['sizes'])*num)
+                cart.color+=((','+data['color'])*num)
+                cart.save()
+            else:
+                cart.sizes=data['sizes']
+                cart.color=data['color']
+                cart.save()
 
         else:
             # 不存在
             # 存入 cart模型中
             ob = Cart(**data)
-            ob.save()
+            num=int(data['num'])
+            ob.num = num
+            lengths=int(data['lengths'])
+            if(lengths>1):
+                ob.sizes=((','+data['sizes'])*num)
+                ob.color=((','+data['color'])*num)
+                ob.save()
+            else:
+                ob.sizes=data['sizes']
+                ob.color=data['color']
+                ob.save()
 
         return JsonResponse({'code':0,'msg':'加入购物车成功!'})
     # except:
@@ -44,21 +59,44 @@ def myhome_cart_add(request):
 
     # return JsonResponse({'code':1,'msg':'加入购物车失败!'})
 
-
+# 商品删除
 def myhome_cart_del(request):
+    try:
+        # cartid
+        cartid = request.GET.get('cartid')
+        # 获取当前购物车商品对象
+        ob = Cart.objects.get(id=cartid)
+        # 执行删除
+        ob.delete()
+        return JsonResponse({'code':0,'msg':'删除成功'})
+    except:
+        pass
+
+    return JsonResponse({'code':1,'msg':'删除失败'})
+
+# 购物车商品数量修改
+def myhome_cart_edit(request):
+    try:
+        cartid = request.GET.get('cartid')
+        num = request.GET.get('num')
+        ob = Cart.objects.get(id=cartid)
+        ob.num=num
+        ob.save()
+
+        return JsonResponse({'code':0,'msg':'删除成功'})
+    except:
+        pass
+
+    return JsonResponse({'code':1,'msg':'删除失败'})
+
+# 购物车空页
+def myhome_cart_empty(request):
     
 
-    return HttpResponse('myhome_cart_del')
+    return render(request,'myhome/cart/empty.html')
 
-
-
+# 商品清空
 def myhome_cart_clear(request):
     
 
     return HttpResponse('myhome_cart_clear')
-
-
-def myhome_cart_edit(request):
-    
-
-    return HttpResponse('myhome_cart_edit')

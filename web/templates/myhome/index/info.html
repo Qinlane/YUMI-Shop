@@ -166,7 +166,7 @@
                             <div class="attrdiv pc-telling clearfix">
                                 <div class="pc-version" >尺码</div>
                                 <div class="pc-adults"  id="sizes">
-                                    <ul>
+                                    <ul class="length-li1">
                                         {% for v in goods.sizes  %}
                                         <li><a href="javascript:void(0);" title="{{ v }}">{{ v }}</a> </li>
                                         {% endfor %}
@@ -176,7 +176,7 @@
                             <div class="attrdivs pc-telling clearfix">
                                 <div class="pc-version">颜色分类</div>
                                 <div class="pc-adults" id="color">
-                                    <ul>
+                                    <ul class="length-li2">
                                         {% for v in goods.color  %}
                                         <li><a href="javascript:void(0);" title="{{ v }}" >{{ v }}</a> </li>
                                         {% endfor %}
@@ -622,18 +622,26 @@ $('#JoinB').click(function(){
     })
     // 获取 商品id 尺码 颜色  获取数量
     var data = {};
-    
-    console.log(color)
-    console.log(sizes)
+    var index=$('.length-li1').children("li").length;
+    var index2=$('.length-li2').children("li").length;
+
+    if(index && index2){
+        data.lengths=index;
+        console.log(data.lengths)
+    }else{
+        data.lengths=1;
+        console.log(data.lengths)
+    }
 
     if(color != null && sizes  != null){
         data.goodsid = {{ goods.id }};
         data.num = $('#subnum').val();
         data.color = color;
         data.sizes = sizes;
+        
         // 发送AJAX 加入购物车
         $.get('{% url 'myhome_cart_add' %}',data,function(data){
-            alert(data['msg'])
+           
         },'json')
     }else{
         alert('请选择商品尺码和颜色');
