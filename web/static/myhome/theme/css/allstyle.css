@@ -39,3 +39,44 @@
     text-align: center;
     line-height: 136px;
 }
+
+.coveimg{
+    display: block;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+.coveimg img{
+    width:100%;
+    height: auto;
+}
+.infoimg{
+    display: block;
+    overflow: hidden;
+}
+.infoimg img{
+    width:100%;
+    height: auto;
+}
+
+.shadowex:hover,::after{
+    -webkit-box-shadow: 0px 0px 10px #ccc;
+    -moz-box-shadow: 0px 0px 10px #ccc;
+    box-shadow: 0px 0px 10px #ccc;
+}
+.topborder{
+    border: none !important;
+    border-top: 1px solid #e0e0e0 !important;
+}
+.topborder li{
+    margin: 5px !important;
+    width: 240px !important;
+    height: 300px !important;
+    padding:0 !important;
+    padding-bottom: 10px !important;
+}
+.digit1 a{
+    width: 100% !important;
+    height: 240px !important;
+
+}

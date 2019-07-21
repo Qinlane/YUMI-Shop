@@ -82,20 +82,17 @@
                         </thead>
                         <tbody>
                             {% for v in cartdata %}
-                            <tr role="row" class="odd selected text-h">
+                            <tr role="row" class="odd selected text-h shadowex">
                                 <td class="sorting" aria-controls="datatable-checkbox" style="width: 30px;">
                                     <div class=" mtop" style="position: relative;">
                                         <input class="checkbox" cartid="{{ v.id }}" type="checkbox" id="inlineCheckbox2" value="option1">
-                                        <!-- <span class="checkcoat"></span> -->
                                     </div>
                                 </td>
-                                <!-- <td><input  type="checkbox"></td> -->
                                 <td style="text-align: left ;">
-                                    <div>
-                                        <a href="{% url 'myhome_info' %}?goodsid={{ v.goodsid_id }}"><img
-                                                src="{{ v.goodsid.pic_url }}" width="80"></a>
-                                        &nbsp;<a
-                                            href="{% url 'myhome_info' %}?goodsid={{ v.goodsid_id }}">{{ v.goodsid.goodsname}}</a>
+                                    <div style="height:80px;overflow: hidden;">
+                                        <a href="{% url 'myhome_info' %}?goodsid={{ v.goodsid_id }}">
+                                        <img src="{{ v.goodsid.pic_url }}" width="80"></a>
+                                        &nbsp;<a href="{% url 'myhome_info' %}?goodsid={{ v.goodsid_id }}">{{ v.goodsid.goodsname}}</a>
                                     </div>
                                 </td>
                                 <td>

@@ -1,6 +1,8 @@
 {% extends 'myhome/index.html' %}
 
+
 {% block css %}
+<link rel="stylesheet" href="/static/myhome/theme/css/allstyle.css">
     <script>
          $(function(){
              $(".yScrollListInList1 ul").css({width:$(".yScrollListInList1 ul li").length*(160+84)+"px"});
@@ -140,10 +142,10 @@
             <div class="pc-details-l">
                 <div class="pc-product clearfix">
                     <div class="pc-product-h">
-                        <div class="pc-product-top"><img src="{{ goods.pic_url}}" id="big_img" width="418" height="418"></div>
+                        <div class="pc-product-top infoimg"><img src="{{ goods.pic_url}}" id="big_img" width="418" height="418"></div>
                         <div class="pc-product-bop clearfix" id="pro_detail">
                             <ul>
-                                <li><a href="javascript:void(0);" class="cur" simg="{{ goods.pic_url }}"><img src="{{ goods.pic_url}}" width="58" height="58"></a> </li>
+                                <li><a href="javascript:void(0);" class="cur infoimg" simg="{{ goods.pic_url }}"><img src="{{ goods.pic_url}}" width="58" height="58"></a> </li>
                                 <li><a href="javascript:void(0);" simg="/static/myhome/theme/img/pd/produc1.jpg"><img src="/static/myhome/theme/img/pd/produc1.jpg" width="58" height="58"></a> </li>
                                 <li><a href="javascript:void(0);" simg="/static/myhome/theme/img/pd/produc2.jpg"><img src="/static/myhome/theme/img/pd/produc2.jpg" width="58" height="58"></a> </li>
                                 <li><a href="javascript:void(0);" simg="/static/myhome/theme/img/pd/produc3.jpg"><img src="/static/myhome/theme/img/pd/produc3.jpg" width="58" height="58"></a> </li>
@@ -593,9 +595,6 @@
 <!-- 商品详情 End -->
 <script>
 
-
-
-
     // 绑定加入购物车事件
 $('#JoinB').click(function(){
     // 检测是否登录
@@ -624,14 +623,16 @@ $('#JoinB').click(function(){
     var data = {};
     var index=$('.length-li1').children("li").length;
     var index2=$('.length-li2').children("li").length;
-
-    if(index && index2){
-        data.lengths=index;
-        console.log(data.lengths)
-    }else{
-        data.lengths=1;
-        console.log(data.lengths)
+    var lengths=0
+    if(index>1 && index2>1){
+        lengths=3;
+    }else if(index2>1){
+        lengths=2;
+    }else if(index>1){
+        lengths=1;
     }
+    console.log(lengths)
+    data.lengths = lengths
 
     if(color != null && sizes  != null){
         data.goodsid = {{ goods.id }};
@@ -641,7 +642,7 @@ $('#JoinB').click(function(){
         
         // 发送AJAX 加入购物车
         $.get('{% url 'myhome_cart_add' %}',data,function(data){
-           
+            alert(data.msg)
         },'json')
     }else{
         alert('请选择商品尺码和颜色');

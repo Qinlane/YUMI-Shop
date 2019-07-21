@@ -1,6 +1,7 @@
 {% extends 'myhome/index.html' %}
 
 {% block css %}
+<link rel="stylesheet" href="/static/myhome/theme/css/allstyle.css">
 
 {% endblock %}
 
@@ -82,13 +83,13 @@
         <div class="time-border-list pc-search-list clearfix">
             <ul class="clearfix">
                 {% for v in Cateslist.goods %}
-                <li>
+                <li class="shadowex">
                     <div style="margin:0 auto;">
-                        <a href="{% url 'myhome_info' %}?goodsid={{ v.id }}"> <img src="{{ v.pic_url }}" height="200" style="margin:0 auto;"></a>
+                        <a href="{% url 'myhome_info' %}?goodsid={{ v.id }}" class="coveimg" > <img src="{{ v.pic_url }}" ></a>
+                        <p><span class="price">￥{{ v.price}}</span> <span class="fr">{{ v.ordernum }}人购买</span></p>
                         <p class="head-name"><a href="{% url 'myhome_info' %}?goodsid={{ v.id }}">{{ v.goodsname }}</a> </p>
-                        <p><span class="price">￥{{ v.price}}</span></p>
-                        <p class="head-futi clearfix"><span class="fl">好评度：90% </span> <span class="fr">{{ v.ordernum }}人购买</span></p>
-                        <p class="clearfix"><span class="label-default fl">收藏</span> <a href="#" class="fr pc-search-c">加入购物车</a> </p>
+
+                        <p class="clearfix"><a href="#" class="fl"><span class="label-default fl">收藏</span> </a> <span class="fr head-futi" style="line-height:33px;">好评度：90% </span></p>
                     </div>
                 </li>
                 {% endfor %}

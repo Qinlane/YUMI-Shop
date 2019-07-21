@@ -1,6 +1,7 @@
 {% extends 'myhome/index.html' %}
 
 {% block css %}
+<link rel="stylesheet" href="/static/myhome/theme/css/allstyle.css">
 
 {% endblock %}
 
@@ -35,12 +36,13 @@
         <div class="pc-nav-title">
             <h3>{{ iii.name }}</h3>
         </div>
-        <div class="pc-nav-digit clearfix">
-            <ul>
+        <div class="pc-nav-digit clearfix topborder">
+            <ul style="padding-top:10px;">
                 {% for iiii in iii.goods_set.all %}
-                <li>
-                    <div class="digit1"><a href="{% url 'myhome_info' %}?goodsid={{ iiii.id }}"><img src="{{ iiii.pic_url }}" width="130" height="150"></a></div>
+                <li class="shadowex">
+                    <div class="digit1 infoimg"><a href="{% url 'myhome_info' %}?goodsid={{ iiii.id }}"><img src="{{ iiii.pic_url }}"></a></div>
                     <div class="digit2"><a href="{% url 'myhome_info' %}?goodsid={{ iiii.id }}">{{ iiii.goodsname }}</a></div>
+                    <p><span class="price">￥{{ iiii.price}}</span></p>
                 </li>
                 {% endfor %}
                
