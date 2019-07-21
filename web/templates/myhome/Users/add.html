@@ -1,12 +1,11 @@
 {% extends 'myhome/index.html' %}
 
 {% block title %}
-<title>地址编辑</title>
+<title>地址添加</title>
 {% endblock %}
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/member.css">
-<link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/base.css">
 <link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/login.css">
 <link href="/static/myhome/theme/css/personal.css" rel="stylesheet" type="text/css">
 <link href="/static/myhome/theme/css/systyle.css" rel="stylesheet" type="text/css">
@@ -53,28 +52,26 @@
 			</div>
 			<div class="member-border">
 			    <div class="member-sites">
-			    	<form action="{% url 'myhome_address_doedit' %}?id={{request.session.VipUser.uid}}" method="POST" >
+			    	<form action="{% url 'myhome_address_doadd' %}?uid={{request.session.VipUser.uid}}" method="POST" >
 				    	{% csrf_token %}
-				    	{% for i in data %}
 				        <div class="login-input">
 			                <label><i class="heart">*</i>收货人：</label>
 			                <input type="text" class="list-input1" name="name" 
-			                placeholder="收货人" autocomplete="off" value="{{i.name}}" required>
+			                placeholder="收货人" autocomplete="off" required>
 			            </div>
 			            <div class="login-input">
 			                <label><i class="heart">*</i>：收货地址：</label>
 			                <input type="text" class="list-input"  name="address"
-			                placeholder="收货地址" autocomplete="off" value="{{i.address}}" required>
+			                placeholder="收货地址" autocomplete="off" required>
 			            </div>
 			            <div class="login-input">
 			                <label><i class="heart">*</i>手机号：</label>
-			                <input type="text" class="list-input3"  name="phone" placeholder="手机" autocomplete="off" maxlength="11" value="{{i.phone}}" required>
+			                <input type="text" class="list-input3"  name="phone" placeholder="手机" autocomplete="off" maxlength="11" required>
 			                <span class="tip-font2"></span>
 			            </div>
 			            <div class="login-button">
-			                <a id="nextStep">完成编辑</a>
+			                <a id="nextStep">完成添加</a>
 			            </div>
-			            {% endfor %}
 			        </form>
 			    </div>
 			</div>

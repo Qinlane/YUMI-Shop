@@ -1,0 +1,192 @@
+{% extends 'myhome/index.html' %}
+
+{% block title %}
+<title>个人信息</title>
+{% endblock %}
+
+{% block css %}
+<link href="/static/myhome/theme/css/personal.css" rel="stylesheet" type="text/css">
+<link href="/static/myhome/theme/css/systyle.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/member.css">
+<link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/login.css">
+<link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/infstyle.css">
+<link rel="shortcut icon" type="image/x-icon" href="/static/myhome/theme/icon/favicon.ico">
+{% endblock %}
+
+{% block header%}
+
+{% endblock %}
+
+{% block der %}
+
+{% endblock%}
+
+{% block banner %}
+
+{% endblock %}
+
+{% block con %}
+<section id="member">
+    <div class="member-center clearfix">
+      <div class="member-left fl">
+          <div class="ddzx">个人中心</div>
+          <div class="subddzx">
+            <ul>
+              <li><a href="{% url 'myhome_information' %}">个人信息</a></li>
+              <li><a href="{% url 'myhome_safety' %}">安全设置</a></li>
+              <li><a href="{% url 'myhome_address' %}">地址管理</a></li>
+              <li><a href="{% url 'myhome_collect' %}">我的收藏</a></li>
+              <li><a href="">我的信息</a></li>
+            </ul>
+          </div>
+          <div class="ddzx">我的交易</div>
+          <div class="subddzx">
+            <ul>
+              <li><a href="">订单管理</a></li>
+              <li><a href="">退款售后</a></li>
+              <li><a href="">评价商品</a></li>
+            </ul>
+          </div>
+      </div>
+      <div class="member-right fr">
+        <div class="user-info">
+            <!--标题 -->
+            <div class="member-head">
+              <div class="member-heels fl"><strong class="am-text-danger am-text-lg">个人资料</strong> / <small>Personal&nbsp;information</small></div>
+            </div>
+            <hr>
+            <!--头像 -->
+            <div class="user-infoPic">
+
+              <div class="filePic">
+                <input type="file" class="inputPic" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*">
+                <img class="am-circle am-img-thumbnail" src="{{request.session.VipUser.pic_url}}" alt="" width="100px" height="100px">
+              </div>
+
+              <p class="am-form-help">头像</p>
+
+              <div class="info-m">
+                <div><b>用户名：<i>{{request.session.VipUser.nikename}}</i></b></div>
+                <div class="u-level">
+                  <span class="rank r2">
+                           <s class="vip1"></s><a class="classes" href="#">铜牌会员</a>
+                        </span>
+                </div>
+                <div class="u-safety">
+                  <a href="safety.html">
+                   账户安全
+                  <span class="u-profile"><i class="bc_ee0000" style="width: 60px;" width="0">60分</i></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!--个人信息 -->
+            <div class="info-main">
+              <form class="am-form am-form-horizontal" action="{% url 'myhome_doinfor' %}" method="POST" enctype="multipart/form-data">
+                {% for i in data %}
+                {% csrf_token %}
+                <div class="am-form-group">
+                  <label for="user-name2" class="am-form-label">昵称</label>
+                  <div class="am-form-content">
+                    <input type="text" id="user-name2" placeholder="nikename" value="{{i.nikename}}" name="nikename">
+                  </div>
+                </div>
+                <div class="am-form-group">
+                  <label for="user-name" class="am-form-label">年龄</label>
+                  <div class="am-form-content">
+                    <input type="text" id="user-name2" placeholder="age" value="{{i.age}}" name="age">
+                  </div>
+                </div>
+                <div class="am-form-group">
+                  <label class="am-form-label">性别</label>
+                  <div class="am-form-content sex">
+                    <label class="radio-inline">
+                        <input type="radio" name="sex" value="0" {% if i.sex == '0' %} checked {% endif %} > 女
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sex" value="1" {% if i.sex == '1' %} checked {% endif %} > 男
+                    </label>
+                  </div>
+                </div>
+                </div>
+                <div class="am-form-group" style="margin-left: 100px">
+                  <label for="user-phone" class="am-form-label">电话</label>
+                  <div class="am-form-content">
+                    <input id="user-phone" placeholder="telephonenumber" type="tel" value="{{i.phone}}" maxlength="11" name="phone">
+                    <span class="tip-font2"></span>
+                  </div>
+                </div>
+                <div class="am-form-group" style="margin-left: 100px">
+                  <label for="user-email" class="am-form-label">电子邮件</label>
+                  <div class="am-form-content">
+                    <input id="user-email" placeholder="Email" type="email" value="{{i.email}}" name="email">
+                  </div>
+                </div>
+               <div class="item form-group" style="margin-left: 100px">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            头像
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" style="margin-left: 80px">
+                            <img id="showImg" src="{{ i.pic_url }}" alt="..." width="200" class="img-rounded">
+                            <!-- <input 
+                            class="input-css " id="ReadFile" name="pic" type="file"> -->
+                            <link rel="stylesheet" href="/static/myadmin/assets/css/inputcss.css">
+                            <br>
+                            <a href="javascript:;" class="file"><i class="fa fa-folder-open"></i> 选择文件    
+                            <input  id="ReadFile" name="pic" type="file" class="file form-control" 
+                                onkeydown="return false;" onpaste="return false;" 
+                                placeholder="Select file...">
+                            </a>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                      $('#ReadFile').change(function(){
+                          var file = this.files[0];
+
+                          //限定上传文件的类型，判断是否是图片类型
+                          if (!/image\/\w+/.test(file.type)) {
+                              alert("只能选择图片");
+                              return false;
+                          }
+                          var reader = new FileReader();
+                          reader.readAsDataURL(file);
+                          reader.onload = function(e) {
+                              base64Code = this.result;
+                              //把得到的base64赋值到img标签显示
+                              $("#showImg").attr("src", base64Code);
+                          }
+                      })
+                    </script>
+                <div class="login-button">
+                    <button id="send" type="submit" >保存修改</button>
+                </div>
+                {% endfor %}
+              </form>
+            </div>
+          </div>
+      </div>
+    </div>
+</section>
+<script type="text/javascript">
+  $('#user-phone').blur(function(){
+    var phone = $(this).val()
+    reg=/^[1][3,4,5,7,8][0-9]{9}$/;
+    if(reg.test(phone)){
+      $('span').remove();
+          var error1 = '√';
+          $('#user-phone').after('<span style="color:green;">'+ error1 +'</span>')
+    }
+    else{
+      $('span').remove();
+          var error2 = '手机号格式不正确';
+          $('#user-phone').after('<span style="color:red;">'+ error2 +'</span>')
+    }
+  })
+  $('#nextStep').click(function(){
+      $(this).parents('form').submit()
+  })
+</script>
+
+{% endblock%}

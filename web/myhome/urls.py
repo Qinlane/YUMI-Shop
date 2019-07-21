@@ -29,16 +29,33 @@ urlpatterns = [
 
     # 个人中心首页
     url(r'personal/$', PersonalViews.myhome_personal, name="myhome_personal"),
+    # 个人信息页面
+    url(r'information/$',PersonalViews.myhome_information,name="myhome_information"),
+    # 执行个人信息修改
+    url(r'doinfor/$',PersonalViews.myhome_doinfor,name="myhome_doinfor"),
+    # 安全设置
+    url(r'safety/$',PersonalViews.myhome_safety,name="myhome_safety"),
+    # 我的收藏
+    url(r'collect/$', PersonalViews.myhome_collect, name="myhome_collect"),
     # 地址管理页面
     url(r'address/$', PersonalViews.myhome_address, name="myhome_address"),
     # 设置为默认地址
     url(r'address/def/$', PersonalViews.myhome_address_def, name="myhome_address_def"),
+    # 添加地址
+    url(r'address/add/$', PersonalViews.myhome_address_add, name="myhome_address_add"),
+    # 执行添加地址
+    url(r'address/doadd/$', PersonalViews.myhome_address_doadd, name="myhome_address_doadd"),
     # 地址编辑页面
     url(r'address/edit/$', PersonalViews.myhome_address_edit, name="myhome_address_edit"),
     # 执行编辑
     url(r'address/doedit/$', PersonalViews.myhome_address_doedit, name="myhome_address_doedit"),
     # 地址删除
     url(r'address/del/$', PersonalViews.myhome_address_del, name="myhome_address_del"),
+    # 我的信息页面
+    url(r'news/$',PersonalViews.myhome_news,name="myhome_news"),
+
+    # 发送邮箱测试
+    url(r'send/many/email/$',PersonalViews.send_many_email,name="send_many_email"),
 
     # 购物车  增删改查 
     url(r'^cart/index/',CartViews.myhome_cart_index,name="myhome_cart_index"),
