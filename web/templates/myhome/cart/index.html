@@ -1,6 +1,304 @@
 {% extends 'myhome/index.html' %}
 
+{% block title %}
+<title>我的购物车</title>
+{% endblock %}
+
+{% block css %}
+<!-- Font Awesome -->
+<link href="/static/myadmin/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<link href="/static/myadmin/assets/nprogress/nprogress.css" rel="stylesheet">
+<link href="/static/myadmin/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/myadmin/assets/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="/static/myadmin/assets/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="/static/myadmin/assets/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="/static/myadmin/assets/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="/static/myadmin/assets/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="/static/myadmin/assets/iCheck/skins/flat/green.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/myhome/theme/css/allstyle.css">
+
+
+{% endblock %}
+
+{% block ordertop %}
+<div class="container clearfix">
+    <div class="header-logo fl" style="width:212px;">
+        <h1><a href="{% url 'myhome_index' %}"><img src="/static/myhome/theme/icon/logo.png" height="70"></a></h1>
+    </div>
+    <div class="pc-order-titlei fl" style="margin-top:5px;">
+        <h2>填写订单</h2>
+    </div>
+    <div class="pc-step-title fl">
+        <ul>
+            <li class="cur"><a href="#">1 . 我的购物车</a></li>
+            <li class="cur2"><a href="#">2 . 填写核对订单</a></li>
+            <li class="cur2"><a href="#">3 . 成功提交订单</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block yHeader %}
+
+{% endblock %}
+
+{% block banner %}
+{% endblock %}
+
 {% block con %}
 <!-- 页面内容 -->
+<section>
+    <div class="containers">
+        <div id="datatable-checkbox_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="datatable-checkbox" class="table-border  table table-striped table-bordered bulk_action  no-footer"
+                        role="grid" aria-describedby="datatable-checkbox_info" style="border:;">
+                        <thead>
+                            <tr class="text-h" role="row" style="text-align: center;">
+                                <th class="sorting" aria-controls="datatable-checkbox" style="width: 30px;">
+                                    <div class="JSelectAll" style="margin-top:5px;" v-model="all">全选</div>
+
+                                    <input class="allselect" type="checkbox" id="inlineCheckbox2" style="width:20px;height:20px;"
+                                        value="option1">
+                                </th>
+                                <th class="sorting"  aria-controls="datatable-checkbox"
+                                    aria-label="商品信息: activate to sort column ascending" style="width: 167px;">商品信息</th>
+                                <th class="sorting"  aria-controls="datatable-checkbox"
+                                    aria-label="单价: activate to sort column ascending" style="width: 80px;"></th>
+                                <th class="sorting"  aria-controls="datatable-checkbox"
+                                    aria-label="单价: activate to sort column ascending" style="width: 70px;">单价</th>
+                                <th class="sorting"  aria-controls="datatable-checkbox"
+                                    aria-label="Age: activate to sort column ascending" style="width: 60px;">数量</th>
+                                <th class="sorting"  aria-controls="datatable-checkbox" colspan="1"
+                                    aria-label="Start date: activate to sort column ascending" style="width: 50px;">小计
+                                </th>
+                                <th class="sorting"  aria-controls="datatable-checkbox"
+                                    aria-label="Salary: activate to sort column ascending" style="width: 60px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for v in cartdata %}
+                            <tr role="row" class="odd selected text-h">
+                                <td class="sorting" aria-controls="datatable-checkbox" style="width: 30px;">
+                                    <div class=" mtop" style="position: relative;">
+                                        <input class="checkbox" cartid="{{ v.id }}" type="checkbox" id="inlineCheckbox2" value="option1">
+                                        <!-- <span class="checkcoat"></span> -->
+                                    </div>
+                                </td>
+                                <!-- <td><input  type="checkbox"></td> -->
+                                <td style="text-align: left ;">
+                                    <div>
+                                        <a href="{% url 'myhome_info' %}?goodsid={{ v.goodsid_id }}"><img
+                                                src="{{ v.goodsid.pic_url }}" width="80"></a>
+                                        &nbsp;<a
+                                            href="{% url 'myhome_info' %}?goodsid={{ v.goodsid_id }}">{{ v.goodsid.goodsname}}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="mtop">
+                                        颜色：{{ v.color }}
+                                        <br>
+
+
+                                        尺码：{{ v.sizes }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="mtop">
+                                        <i class="fa fa-yen"></i> {{ v.goodsid.price }}
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="mtop">
+                                        <div class=" btn-group  btn-group-sm amout"
+                                            style="width:150px;margin-left: 10px;">
+                                            <a href="javascript:void(0);" class="btn btn-default amount2" id=""><i
+                                                    class="glyphicon glyphicon-minus"></i></a>
+                                            <input class="col-md-1 subnum" price="{{ v.goodsid.price }}" value="{{ v.num }}" cartid="{{ v.id }}" type="text" id="subnum"
+                                                style="height:32px;width: 50px;text-align: center;">
+                                            <a href="javascript:void(0);" class="btn btn-default amount1" id=""><i
+                                                    class="glyphicon glyphicon-plus"></i></a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% load pagetag %}
+                                    <div class="mtop ">
+                                        <i class="fa fa-yen"></i>
+                                        <span class="total">{% Product v.num v.goodsid.price %}</span>
+                                        
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="mtop">
+                                        <a href="javascript:void(0);" cartid="{{ v.id }}" class="cart-remove" style="color:#ccc;font-size: 18px;"><i
+                                                class="fa fa-trash"></i> 删除</a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="clearfix">
+            <div class="fr pc-list-t">
+                <ul>
+                    <li><span>共 <b  class="totalCount">0</b> 件商品，总商品金额：</span> <i class="fa fa-yen"></i> <span class="totalPrice">0.00</span></li>
+                    <li><span>运费：</span> <em>￥0.00</em></li>
+                    <li><span>减额：</span> <em>￥0.00</em></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pc-space-n"></div>
+        <div class="clearfix">
+            <div class="fr pc-space-j">
+                <spna>应付总额：<i class="fa fa-yen" style="color:rgb(200,22,35);"></i>&nbsp;<strong  class="totalPrice">0.00</strong></spna>
+                <button class="pc-submit">提交订单</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</section>
+<script>
+    // 全选
+    JSelectAll(); 
+
+    function JSelectAll(){
+        // 全选
+        var checkbox = $('.odd :checkbox')
+        var flag = true;
+        $('.allselect').click(function() {
+            if (this.checked) {
+                checkbox.prop('checked', true);
+                $(checkbox).addClass('checked');
+                flag=false;
+            } else {
+                checkbox.prop('checked', false);
+                $(checkbox).removeClass('checked');
+
+            }
+            TotalNum()
+        })
+        // 单选
+        $('.checkbox').click(function(){
+            var c = $(this).hasClass('checked')
+            if (!c) {
+                $(this).addClass('checked');
+                flag=false;
+            } else {
+                $(this).removeClass('checked');
+                flag=true;
+            }
+            TotalNum()
+        })
+    }
+   
+    // 计算总价和购买总数方法
+    function TotalNum(){
+        var cartids = []
+        var TotalPrice = 0
+        var CountNum = 0
+
+        // 获取页面中所有的选框
+        $('table').find('.checked').each(function(){
+            // 获取当前选中的元素的 小计价格 和数量
+            TotalPrice += Number($(this).parents('tr').find('.total').text())
+            CountNum += Number($(this).parents('tr').find('.subnum').val())
+        })
+        // console.log(TotalPrice,CountNum)
+
+        $('.totalCount').text(CountNum)
+        $('.totalPrice').text(toDecimal2(TotalPrice))
+    }
+
+    // 数量减少 
+    $('.amount2').click(function () {
+        var num_input = $(this).parents('.amout').find('.subnum')
+        var cartid = num_input.attr('cartid')
+        var buy_num = Number(num_input.val())
+        if(buy_num <= 1){
+            buy_num = 1
+            return;
+        }
+        buy_num--;
+        // 调用函数修改数据
+        RequestCartNum(cartid,buy_num)
+        num_input.val(buy_num);
+
+        var price = num_input.attr('price')
+        var total = toDecimal2(buy_num * price) 
+        $(this).parents('tr').find('.total').text(total)
+        TotalNum()
+    });
+
+    $('.amount1').click(function () {
+        var num_input = $(this).parents('.amout').find('.subnum')
+        var cartid = num_input.attr('cartid')
+        var buy_num = Number(num_input.val()) + 1;
+        // 调用函数修改数据
+        RequestCartNum(cartid,buy_num)   
+        num_input.val(buy_num);
+
+        var price = num_input.attr('price')
+        var total = toDecimal2(buy_num * price) 
+        $(this).parents('tr').find('.total').text(total)
+        TotalNum()
+    });
+ 
+    // 购物车商品删除
+    $('.cart-remove').click(function(){
+        var a=$(this)
+        // 获取要删除的购物车id
+        var cartid = $(this).attr('cartid')
+        // 发送ajax请求
+        $.get('{% url 'myhome_cart_del' %}',{'cartid':cartid},function(data){
+            if(data['code'] == 0){
+                //删除成功
+               a.parents('tr').remove()
+            }
+            alert(data.msg);
+        },'json')
+        TotalNum()
+    })
+
+    // 封装函数，发送ajax请求，修改购物车商品的购买数量
+    function RequestCartNum(cartid,num){
+        $.get('{% url 'myhome_cart_edit' %}',{'cartid':cartid,'num':num},function(data){
+            
+        },'json')
+    }
+
+</script>
+
+{% endblock %}
+
+{% block jsbanner %}
+<!-- Bootstrap -->
+<script src="/static/myadmin/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="/static/myadmin/assets/fastclick/lib/fastclick.js"></script>
+<!-- iCheck -->
+<script src="/static/myadmin/assets/iCheck/icheck.min.js"></script>
+<!-- Datatables -->
+<script src="/static/myadmin/assets/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/static/myadmin/assets/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="/static/myadmin/assets/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/static/myadmin/assets/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
 
 {% endblock %}

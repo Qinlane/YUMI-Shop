@@ -101,7 +101,7 @@ def user_edit(request):
             ob.pic_url=uploads_pic(myfile)
 
         # 更新其他字段
-        ob.nikname = request.POST.get('nikname')
+        ob.nikename = request.POST.get('nikename')
         ob.email=request.POST.get('email')
         ob.phone=request.POST.get('phone')
         ob.age=request.POST.get('age')

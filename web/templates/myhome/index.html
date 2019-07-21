@@ -25,10 +25,8 @@
     <script type="text/javascript" src="/static/myhome/theme/js/MSClass.js"></script>
     <script type="text/javascript" src="/static/myhome/theme/js/jcarousellite.js"></script>
     {% block css %}
-    
     <script type="text/javascript" src="/static/myhome/theme/js/top.js"></script>
     
-    {% endblock %}
     <script type="text/javascript">
         var intDiff = parseInt(80000); //倒计时总秒数量
         function timer(intDiff) {
@@ -57,14 +55,12 @@
             timer(intDiff);
         });
     </script>
-
+    {% endblock %}
     
 
 </head>
 
 <body>
-
-
     <div>
         <div id="moquu_wxin" class="moquu_wxin">
             <a href="javascript:void(0)">
@@ -109,7 +105,7 @@
                     <!-- <li><a href="{% url 'myhome_register' %}">免费注册</a> </li> -->
                     <div class="righton">
                         <li class="header-cart">
-                            <a href="#">
+                            <a href="{% url 'myhome_cart_index' %}">
                                 <i class="icon-gouwuche"></i>
                                 我的购物车
                             </a>
@@ -141,6 +137,7 @@
                 </ul>
             </div>
         </div>
+        {% block ordertop %}
         <div class="container clearfix">
             <div class="header-logo fl">
                 <h1><a href="{% url 'myhome_index' %}"><img src="/static/myhome/theme/icon/logo.png" height="90"></a> </h1>
@@ -162,8 +159,11 @@
             </div>
 
             <div class="head-mountain"></div>
+       
         </div>
-        {% block der %}
+        {% endblock %}
+
+        {% block yHeader %}
         <div class="yHeader">
             <div class="yNavIndex">
                 <div class="pullDown">

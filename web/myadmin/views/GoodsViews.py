@@ -27,7 +27,6 @@ def goods_index(request):
     
     # 实例化分页类
     p = Paginator(data,10) 
-    print(p.num_pages)
     # 获取当前的页码数
     pageindex=request.GET.get('page',1)
 
@@ -96,7 +95,7 @@ def goods_edit(request):
         ob.price = request.POST.get('price')
         ob.brand = request.POST.get('brand')
         ob.color = request.POST.get('color')
-        ob.size = request.POST.get('size')
+        ob.sizes = request.POST.get('sizes')
         ob.goodsnum = request.POST.get('goodsnum')
         ob.goodsinfo = request.POST.get('goodsinfo')
         ob.save()
