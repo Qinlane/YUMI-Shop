@@ -1,4 +1,4 @@
-# *YUMI-Shop**
+# **YUMI-Shop**
 
 #### 项目的目录介绍
 
