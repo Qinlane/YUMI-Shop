@@ -85,9 +85,9 @@
                 {% for v in Cateslist.goods %}
                 <li class="shadowex">
                     <div style="margin:0 auto;">
-                        <a href="{% url 'myhome_info' %}?goodsid={{ v.id }}" class="coveimg" > <img src="{{ v.pic_url }}" ></a>
+                        <a href="{% url 'myhome_info' %}?goodsid={{ v.id }}"  target="_blank" class="coveimg" > <img src="{{ v.pic_url }}" ></a>
                         <p><span class="price">￥{{ v.price}}</span> <span class="fr">{{ v.ordernum }}人购买</span></p>
-                        <p class="head-name"><a href="{% url 'myhome_info' %}?goodsid={{ v.id }}">{{ v.goodsname }}</a> </p>
+                        <p class="head-name"><a href="{% url 'myhome_info' %}?goodsid={{ v.id }}"  target="_blank">{{ v.goodsname }}</a> </p>
 
                         <p class="clearfix"><a href="#" class="fl"><span class="label-default fl">收藏</span> </a> <span class="fr head-futi" style="line-height:33px;">好评度：90% </span></p>
                     </div>

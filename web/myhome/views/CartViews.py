@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404,JsonResponse
-
 from myadmin.models import Users,Cates,Goods,Cart
 
 # 购物车列表
@@ -23,6 +22,7 @@ def myhome_cart_add(request):
         ob = Cart.objects.filter(uid=data['uid']).filter(goodsid=data['goodsid'])
 
         if ob.count():
+            # 0：尺码和颜色都只有一个选项，1:尺码有2个选项以上，2：颜色有2个选项以上，3：尺码和颜色都有2个选项以上
             # 存在 获取当前购物车对象
             cart = Cart.objects.get(id=ob[0].id)
             num=int(data['num'])

@@ -631,9 +631,8 @@ $('#JoinB').click(function(){
     }else if(index>1){
         lengths=1;
     }
-    console.log(lengths)
-    data.lengths = lengths
 
+    data.lengths = lengths 
     if(color != null && sizes  != null){
         data.goodsid = {{ goods.id }};
         data.num = $('#subnum').val();
