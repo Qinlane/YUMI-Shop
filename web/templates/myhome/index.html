@@ -96,16 +96,16 @@
                     <li><a href="{% url 'myhome_logout' %}" style="color:#ea4949;">退出登录</a> </li>
                     {% else %}
                     <div class="lefton">
-                        <li><a href="{% url 'myhome_login' %}" style="color:#ea4949;">亲，请登录</a> </li>
+                        <li><a href="{% url 'myhome_login' %}" style="color:#ea4949;" target="_blank" >亲，请登录</a> </li>
                         <li class="headerul">|</li>
-                        <li><a href="{% url 'myhome_register' %}">免费注册</a> </li>
+                        <li><a href="{% url 'myhome_register' %}" target="_blank" >免费注册</a> </li>
                     </div>
                     {% endif %}
                     <!-- <li class="headerul">|</li> -->
                     <!-- <li><a href="{% url 'myhome_register' %}">免费注册</a> </li> -->
                     <div class="righton">
                         <li class="header-cart">
-                            <a href="{% url 'myhome_cart_index' %}">
+                            <a href="{% url 'myhome_cart_index' %}" target="_blank" >
                                 <i class="icon-gouwuche"></i>
                                 我的购物车
                             </a>
@@ -169,7 +169,7 @@
                 <div class="pullDown">
 
                     <h2 class="pullDownTitle">
-                        <a href="{% url 'myhome_all_list' %}" style="color:white">全部商品分类</a>
+                        <a href="{% url 'myhome_all_list' %}" style="color:white" target="_blank" >全部商品分类</a>
                     </h2>
                     {% block header %}
                     <ul class="pullDownList">
@@ -243,15 +243,15 @@
         <div class="yBanner">
             <div class="banner" id="banner">
                 <a href="javascript:;" class="d1"
-                    style="background:url(/static/myhome/theme/img/ad/banner1.jpg) center no-repeat;background-color: #f01a38; padding-left:180px;"></a>
+                    style="background:url(/static/myhome/theme/img/ad/banner1.jpg) center no-repeat;background-color: #f01a38; padding-left:180px;" target="_blank" ></a>
                 <a href="javascript:;" class="d1"
-                    style="background:url(/static/myhome/theme/img/ad/banner2.jpg) center no-repeat;background-color: #8C51C7; padding-left:180px;"></a>
+                    style="background:url(/static/myhome/theme/img/ad/banner2.jpg) center no-repeat;background-color: #8C51C7; padding-left:180px;" target="_blank" ></a>
                 <a href="javascript:;" class="d1"
-                    style="background:url(/static/myhome/theme/img/ad/banner3.jpg) center no-repeat;background-color: #FFFFFF; padding-left:180px;"></a>
+                    style="background:url(/static/myhome/theme/img/ad/banner3.jpg) center no-repeat;background-color: #FFFFFF; padding-left:180px;" target="_blank" ></a>
                 <a href="javascript:;" class="d1"
-                    style="background:url(/static/myhome/theme/img/ad/banner4.jpg) center no-repeat;background-color: #EDC6DB; padding-left:180px;"></a>
+                    style="background:url(/static/myhome/theme/img/ad/banner4.jpg) center no-repeat;background-color: #EDC6DB; padding-left:180px;" target="_blank" ></a>
                 <a href="javascript:;" class="d1"
-                    style="background:url(/static/myhome/theme/img/ad/banner5.jpg) center no-repeat;background-color: #E8F4E6; padding-left:180px;"></a>
+                    style="background:url(/static/myhome/theme/img/ad/banner5.jpg) center no-repeat;background-color: #E8F4E6; padding-left:180px;" target="_blank" ></a>
                 <div class="d2" id="banner_id">
                     <ul>
                         <li></li>

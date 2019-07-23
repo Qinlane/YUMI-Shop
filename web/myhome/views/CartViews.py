@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404,JsonResponse
-
 from myadmin.models import Users,Cates,Goods,Cart
 
 # 购物车列表
@@ -14,7 +13,7 @@ def myhome_cart_index(request):
 
 def myhome_cart_add(request):
     
-    # try:
+    try:
         # 执行购物车的商品添加
         data = request.GET.dict()
         data['goodsid'] = Goods.objects.get(id=data['goodsid'])
@@ -23,14 +22,23 @@ def myhome_cart_add(request):
         ob = Cart.objects.filter(uid=data['uid']).filter(goodsid=data['goodsid'])
 
         if ob.count():
+            # 0：尺码和颜色都只有一个选项，1:尺码有2个选项以上，2：颜色有2个选项以上，3：尺码和颜色都有2个选项以上
             # 存在 获取当前购物车对象
             cart = Cart.objects.get(id=ob[0].id)
             num=int(data['num'])
             cart.num += num
             lengths=int(data['lengths'])
-            if(lengths>1):
+            if lengths==3:
                 cart.sizes+=((','+data['sizes'])*num)
                 cart.color+=((','+data['color'])*num)
+                cart.save()
+            elif lengths==2:
+                cart.sizes=data['sizes']
+                cart.color+=((','+data['color'])*num)
+                cart.save()
+            elif lengths==1:
+                cart.sizes+=((','+data['sizes'])*num)
+                cart.color=data['color']
                 cart.save()
             else:
                 cart.sizes=data['sizes']
@@ -44,20 +52,16 @@ def myhome_cart_add(request):
             num=int(data['num'])
             ob.num = num
             lengths=int(data['lengths'])
-            if(lengths>1):
-                ob.sizes=((','+data['sizes'])*num)
-                ob.color=((','+data['color'])*num)
-                ob.save()
-            else:
-                ob.sizes=data['sizes']
-                ob.color=data['color']
-                ob.save()
+
+            ob.sizes=data['sizes']
+            ob.color=data['color']
+            ob.save()
 
         return JsonResponse({'code':0,'msg':'加入购物车成功!'})
-    # except:
-    #     pass
+    except:
+        pass
 
-    # return JsonResponse({'code':1,'msg':'加入购物车失败!'})
+    return JsonResponse({'code':1,'msg':'加入购物车失败!'})
 
 # 商品删除
 def myhome_cart_del(request):

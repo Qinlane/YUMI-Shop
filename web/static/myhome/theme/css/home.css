@@ -301,7 +301,7 @@ body{min-width: 1200px; _width:expression(document.documentElement.clientWidth>1
 .time-border-list {padding:40px 0;}
 .time-border-list  .label-default {background: url("../icon/icon-lc.png") no-repeat; color:#fff; font-size:20px; height:36px; line-height:36px; text-align:left; padding:0; padding-left:4px; margin-top:5px; width:108px;}
 .time-border-list ul li {width:260px; margin-left:30px; float:left; display:inline; margin-bottom:40px;}
-.time-border-list .head-name{ font-size:16px; height:45px; line-height:22px; padding-bottom:5px;}
+.time-border-list .head-name{ font-size:16px; height:35px; line-height:22px; padding-bottom:5px;}
 .time-border-list .price{ font-size:20px; }
 .time-border-list .discount{ font-size:20px; }
 .head-futi {color:#003ea4; font-size:14px; padding:4px 0;}

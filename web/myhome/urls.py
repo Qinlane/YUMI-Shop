@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . views import IndexViews,LoginViews,CartViews,PersonalViews
+from . views import IndexViews,LoginViews,CartViews,PersonalViews,OrderViews
 
 
 urlpatterns = [
@@ -68,6 +68,8 @@ urlpatterns = [
     # 编辑
     url(r'^cart/edit/',CartViews.myhome_cart_edit,name="myhome_cart_edit"),
     
-
     # 订单
+    url(r'^order/confirm/',OrderViews.myhome_order_confirm,name="myhome_order_confirm"),
+    url(r'^order/create/',OrderViews.myhome_order_create,name="myhome_order_create"),
+    url(r'^order/pay/',OrderViews.myhome_order_pay,name="myhome_order_pay"),
 ]

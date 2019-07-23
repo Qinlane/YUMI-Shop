@@ -92,20 +92,24 @@ def user_edit(request):
             ob.password=make_password(request.POST['password'],None,'pbkdf2_sha256')
         
         myfile = request.FILES.get('pic',None)
-        if myfile:
-            # 如有新头像上传，则先删除原头像
-            os.remove(BASE_DIR+ob.pic_url)
-            # ./static/uploads/1545033786.7237682.png   --ob.pic_url
-            # /home/yc/py16/py16-project/web   ---BASE_DIR
-            # 正在上传新头像
+        myfile_now = request.POST.get('pic_url',None)
+
+        # 判断数据库中的pic_url是否为空
+        if myfile_now:
+            if myfile:
+                # 如有新头像上传，则先删除原头像
+                os.remove(BASE_DIR+ob.pic_url)
+                ob.pic_url=uploads_pic(myfile)
+        else:
             ob.pic_url=uploads_pic(myfile)
+
 
         # 更新其他字段
         ob.nikename = request.POST.get('nikename')
-        ob.email=request.POST.get('email')
-        ob.phone=request.POST.get('phone')
-        ob.age=request.POST.get('age')
-        ob.sex=request.POST.get('sex')
+        ob.email = request.POST.get('email')
+        ob.phone = request.POST.get('phone')
+        ob.age = request.POST.get('age')
+        ob.sex = request.POST.get('sex')
         ob.save()
         return HttpResponse('<script>alert("更新成功");location.href="/myadmin/user/index/";</script>')
     else:

@@ -1,4 +1,6 @@
 from django.db import models
+from myadmin.models import Cates,Goods,Cart,Users
+
 
 # 地址管理模型
 class Address(models.Model):

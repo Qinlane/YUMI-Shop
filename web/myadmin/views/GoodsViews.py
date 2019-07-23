@@ -83,12 +83,17 @@ def goods_edit(request):
     if request.method == 'POST':
         # 执行更新操作
         myfile = request.FILES.get('pic',None)
-        if myfile:
-            # 如果有新头像上传则先删除原头像
-            os.remove(BASE_DIR+ob.pic_url)
-            # 上传新头像
-            ob.pic_url = uploads_pic(myfile)
+        myfile_now = request.POST.get('pic_url',None)
 
+        # 判断数据库中的pic_url是否为空
+        if myfile_now:
+            if myfile:
+                # 如有新头像上传，则先删除原头像
+                os.remove(BASE_DIR+ob.pic_url)
+                ob.pic_url=uploads_pic(myfile)
+        else:
+            ob.pic_url=uploads_pic(myfile)
+            
         # 更新其他字段
         ob.goodsname = request.POST.get('goodsname')
         ob.title = request.POST.get('title')
