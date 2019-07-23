@@ -1,0 +1,143 @@
+{% extends 'myhome/index.html' %}
+
+{% block title %}
+<title>安全设置</title>
+{% endblock %}
+
+{% block css %}
+<link href="/static/myhome/theme/css/personal.css" rel="stylesheet" type="text/css">
+<link href="/static/myhome/theme/css/systyle.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/member.css">
+<link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/myhome/theme/css/login.css">
+<link rel="shortcut icon" type="image/x-icon" href="/static/myhome/theme/icon/favicon.ico">
+{% endblock %}
+
+{% block header%}
+
+{% endblock %}
+
+{% block der %}
+
+{% endblock%}
+
+{% block banner %}
+
+{% endblock %}
+
+{% block con %}
+<section id="member">
+    <div class="member-center clearfix">
+        <div class="member-left fl">
+          <div class="ddzx"><a href="{% url 'myhome_personal' %}">个人中心</a></div>
+          <div class="subddzx">
+            <ul>
+              <li><a href="{% url 'myhome_information' %}">个人信息</a></li>
+              <li><a href="{% url 'myhome_safety' %}">安全设置</a></li>
+              <li><a href="{% url 'myhome_address' %}">地址管理</a></li>
+              <li><a href="{% url 'myhome_collect' %}">我的收藏</a></li>
+            </ul>
+          </div>
+          <div class="ddzx"><a href="">我的交易</a></div>
+          <div class="subddzx">
+            <ul>
+              <li><a href="{% url 'myhome_orderinfo' %}">订单管理</a></li>
+              <li><a href="">退款售后</a></li>
+              <li><a href="">评价商品</a></li>
+            </ul>
+          </div>
+        </div>
+
+      <div class="member-right fr">
+        <div class="user-safety">
+			<div class="am-cf am-padding">
+				<div class="member-head">
+					<div class="member-heels fl"><strong class="am-text-danger am-text-lg">手机绑定</strong> / <small>Password &nbsp;Safety</small></div>
+				</div>
+					<form action="{% url 'myhome_phone_change' %}" method="POST" >
+                        {% csrf_token %}
+                    	<div class="login-input">
+                            <label><i class="heart">*</i>手机号：</label>
+                            <input type="text" class="list-iphone" id="account"  name="phone"
+                            placeholder="请设置手机号" oninput="value=value" maxlength="11" autocomplete="off" required>
+                            <span class="tip-font"></span>
+                        </div>
+                        <div class="login-input">
+                            <label><i class="heart">*</i>短信验证码：</label>
+                            <input type="text" class="list-notes"  name="vcode" 
+                            placeholder="请输入短信验证码" maxlength="6" autocomplete="off" required>
+                            <button type="button" id="SendMsg" href="#" class="obtain">获取短信验证码</button>
+                        </div>
+						<div class="login-button">
+							<a id="nextStep">保存修改</a>
+						</div>
+
+					</form>
+				</div>
+			<hr/>
+		</div>
+		</div>
+    </div>
+</section>
+<script type="text/javascript">
+	//获取手机号，发送短信验证
+    $('#SendMsg').click(function(){
+        var phone=$('#account').val();
+        // 验证手机号是否正确
+        reg=/^[1][3,4,5,7,8][0-9]{9}$/;
+        if(reg.test(phone)){
+            // 发送短信验证码
+            $.get('{% url 'myhome_sendMsg' %}',{'phone':phone},function(data){
+                console.log(data)
+            },'json')
+        }
+        // 设置按钮不可点击，倒计时
+        setTime($(this))
+    })
+
+    $('.list-iphone').blur(function(){
+        var phone = $(this).val()
+        var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+        if(reg.test(phone)){
+            $.get('{% url 'isphone' %}',{'phone':phone},function(data){
+                if(data['res']==1){
+                    $('.tip-font').remove();
+                    var error2 = '手机号已注册';
+                    $('.list-iphone').after('<span class="tip-font loginsp">'+ error2 +'</span>')
+                }
+                else{
+                    $('.tip-font').remove();
+                    var error2 = '✔';
+                    $('.list-iphone').after('<span class="tip-font loginspg">'+ error2 +'</span>')
+                }
+            },'json')
+        }
+        else{
+            $('.tip-font').remove();
+            var error1 = '手机号格式不正确';
+            $(this).after('<span class="tip-font loginsp " >'+ error1 +'</span>')
+        }
+    })
+    // 设置按钮不可点击，倒计时
+    var countdown = 60;
+    function setTime(obj) {
+        if (countdown == 0) {
+            obj.prop('disabled', false);
+            obj.text("点击获取验证码");
+            countdown = 60;//60秒过后button上的文字初始化,计时器初始化;
+            return;
+        } else {
+            obj.prop('disabled', true);
+            obj.text("("+countdown+"s)后重新发送") ;
+            countdown--;
+        }
+        setTimeout(function() { setTime(obj) },1000) //每1000毫秒执行一次
+    }
+    $('#nextStep').click(function(){
+        $(this).parents('form').submit()
+    })
+</script>
+{% endblock %}
+
+{% block jsbanner %}
+{% endblock %}

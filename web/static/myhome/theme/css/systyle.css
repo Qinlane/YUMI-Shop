@@ -9,10 +9,10 @@
 .m-baseinfo a {display: block;width: 57px;height: 57px;margin:0px auto;}
 .m-baseinfo a img ,.m-userproperty i img{border-radius: 50%;width: 100%;height: 100%;}
 
-.m-userinfo .s-name {margin-top: 6px;display: block; color: #fff;line-height: 23px;}
+.m-userinfo .s-name {margin-top: 6px;display: block; color: #fff;line-height: 38px;}
 .s-prestige{ line-height:23px; padding:0px 5px;background:#F4F4F4;}
 .vip1{margin-left: 5px;display: inline-block;width: 14px;height: 14px;background:url(/static/myhome/theme/img/personal/%E5%9B%BE%E6%A0%87.png); background-position:-230px -505px;}
-a.i-trigger { cursor: pointer;position: relative; z-index: 2;display: block; padding-top: 10px; color: #fff; text-align: center;}
+a.i-trigger { cursor: pointer;position: relative; z-index: 2;display: block; padding-top: 15px; color: #fff; text-align: center;}
 
 
 .m-new{position: absolute; right:5%;top:35px;z-index: 22;}
@@ -71,7 +71,7 @@ a em.m-num { margin-left: 4px;color: #F40;}
 .s-prestige.am-btn.am-round{border-radius:0 0 ;background: none;border:none ;color: #fff;padding:0px ;}
 .m-address a{text-align: left;}
 .m-new {position:static;margin-bottom: 10px;}	
-.m-right{position: absolute;right:20px;top: 25px;width:20% ;height:55px;border-left:1px solid #ccc;padding-left:10px ;}
+.m-right{position: absolute;right:20px;top: 40px;width:20% ;height:55px;padding-left:10px ;}
 
 /*个人信息*/
 .m-userinfo{height:100px ;padding:20px 0px;}
@@ -173,9 +173,12 @@ span.one-hot-goods{position: absolute;bottom:12px;left: 10px;right:10px;height:2
 .new-goods img{width: 100%;}
 
 
-.subddzx ul li{display: block;width: 154px;height: 40px;line-height: 40px;padding-left: 40px;}
+.subddzx ul li{display: block;width: 100%;height: 40px;line-height: 40px;text-align:center;}
 .subddzx ul li a{color:rgb(117,117,117);}
 .subddzx ul li a:hover{color:rgb(51,51,51);}
-.ddzx{width: 170px;height: 60px;line-height: 60px;font-size: 22px;font-weight:bold;color:rgb(117,117,117);padding-left: 40px;border-bottom: 1px solid #ccc;}
-
+.ddzx{width:100%;height: 60px;line-height: 60px;font-size: 22px;font-weight:bold;color:rgb(117,117,117);text-align:center;border-bottom: 1px solid #ccc;}
+.ddzx a{
+	color:rgb(117,117,117);
+	font-size: 22px;
+}
 }
