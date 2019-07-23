@@ -173,6 +173,7 @@ myadmin_orderinfo
 | num        | int      | not null |        | 11   | 商品数量   |
 | goodsid_id | int      | not null |        | 11   | 商品id     |
 | order_id   | int      | not null |        | 11   | 订单id     |
+| price      | double   | not null |        | 0    | 下单时价格 |
 
 
 

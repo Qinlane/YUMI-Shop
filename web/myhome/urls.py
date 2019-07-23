@@ -28,34 +28,55 @@ urlpatterns = [
     url(r'^sendMsg/',LoginViews.myhome_sendMsg,name="myhome_sendMsg"),
 
     # 个人中心首页
-    url(r'personal/$', PersonalViews.myhome_personal, name="myhome_personal"),
+    url(r'^personal/$', PersonalViews.myhome_personal, name="myhome_personal"),
     # 个人信息页面
-    url(r'information/$',PersonalViews.myhome_information,name="myhome_information"),
+    url(r'^information/$',PersonalViews.myhome_information,name="myhome_information"),
     # 执行个人信息修改
-    url(r'doinfor/$',PersonalViews.myhome_doinfor,name="myhome_doinfor"),
-    # 安全设置
-    url(r'safety/$',PersonalViews.myhome_safety,name="myhome_safety"),
-    # 我的收藏
-    url(r'collect/$', PersonalViews.myhome_collect, name="myhome_collect"),
-    # 地址管理页面
-    url(r'address/$', PersonalViews.myhome_address, name="myhome_address"),
-    # 设置为默认地址
-    url(r'address/def/$', PersonalViews.myhome_address_def, name="myhome_address_def"),
-    # 添加地址
-    url(r'address/add/$', PersonalViews.myhome_address_add, name="myhome_address_add"),
-    # 执行添加地址
-    url(r'address/doadd/$', PersonalViews.myhome_address_doadd, name="myhome_address_doadd"),
-    # 地址编辑页面
-    url(r'address/edit/$', PersonalViews.myhome_address_edit, name="myhome_address_edit"),
-    # 执行编辑
-    url(r'address/doedit/$', PersonalViews.myhome_address_doedit, name="myhome_address_doedit"),
-    # 地址删除
-    url(r'address/del/$', PersonalViews.myhome_address_del, name="myhome_address_del"),
-    # 我的信息页面
-    url(r'news/$',PersonalViews.myhome_news,name="myhome_news"),
+    url(r'^doinfor/$',PersonalViews.myhome_doinfor,name="myhome_doinfor"),
 
-    # 发送邮箱测试
-    url(r'send/many/email/$',PersonalViews.send_many_email,name="send_many_email"),
+
+    # 安全设置
+    url(r'^safety/$',PersonalViews.myhome_safety,name="myhome_safety"),
+    # 密码修改页面
+    url(r'^password/$',PersonalViews.myhome_password,name="myhome_password"),
+    # 执行密码修改
+    url(r'^passwordmol/$',PersonalViews.myhome_passwordmol,name="myhome_passwordmol"),
+    # 换绑手机号页面
+    url(r'^phone/$',PersonalViews.myhome_phone,name="myhome_phone"),
+    # 执行更换手机号
+    url(r'^phone/change/$',PersonalViews.myhome_phone_change,name="myhome_phone_change"),
+    # 绑定邮箱页面
+    url(r'^email/$',PersonalViews.myhome_email,name="myhome_email"),
+    # 执行绑定邮箱
+    url(r'^email/bind/$',PersonalViews.myhome_email_bind,name="myhome_email_bind"),
+
+
+    # 我的收藏
+    url(r'^collect/$', PersonalViews.myhome_collect, name="myhome_collect"),
+    # 删除收藏商品操作
+    url(r'^collect/del/$',PersonalViews.myhome_collect_del,name="myhome_collect_del"),
+
+
+    # 地址管理页面
+    url(r'^address/$', PersonalViews.myhome_address, name="myhome_address"),
+    # 设置为默认地址
+    url(r'^address/def/$', PersonalViews.myhome_address_def, name="myhome_address_def"),
+    # 添加地址
+    url(r'^address/add/$', PersonalViews.myhome_address_add, name="myhome_address_add"),
+    # 执行添加地址
+    url(r'^address/doadd/$', PersonalViews.myhome_address_doadd, name="myhome_address_doadd"),
+    # 地址编辑页面
+    url(r'^address/edit/$', PersonalViews.myhome_address_edit, name="myhome_address_edit"),
+    # 执行编辑
+    url(r'^address/doedit/$', PersonalViews.myhome_address_doedit, name="myhome_address_doedit"),
+    # 地址删除
+    url(r'^address/del/$', PersonalViews.myhome_address_del, name="myhome_address_del"),
+
+    # 发送html邮箱
+    url(r'^email/html/$',PersonalViews.myhome_email_html,name="myhome_email_html"),
+
+    
+
 
     # 购物车  增删改查 
     url(r'^cart/index/',CartViews.myhome_cart_index,name="myhome_cart_index"),
@@ -68,6 +89,8 @@ urlpatterns = [
     # 编辑
     url(r'^cart/edit/',CartViews.myhome_cart_edit,name="myhome_cart_edit"),
     
+    # 订单管理
+    url(r'^orderinfo/$',OrderViews.myhome_orderinfo,name="myhome_orderinfo"),
     # 订单
     url(r'^order/confirm/',OrderViews.myhome_order_confirm,name="myhome_order_confirm"),
     url(r'^order/create/',OrderViews.myhome_order_create,name="myhome_order_create"),

@@ -6,10 +6,13 @@ from myadmin.models import Users,Cates,Goods,Cart
 def myhome_cart_index(request):
     # 获取当前用户的购物车数据
     VipUser = request.session.get('VipUser')
-    data = Cart.objects.filter(uid=VipUser['uid'])
-    context = {'cartdata':data}
-
-    return render(request,'myhome/cart/index.html',context)
+    # 判断是否登录
+    if VipUser:
+        data = Cart.objects.filter(uid=VipUser['uid'])
+        context = {'cartdata':data}
+        return render(request,'myhome/cart/index.html',context)
+    else:
+        return HttpResponse('<script>alert("您还未登陆，请先登录!");history.back()</script>')
 
 def myhome_cart_add(request):
     

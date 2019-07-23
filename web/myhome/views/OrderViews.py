@@ -67,3 +67,8 @@ def myhome_order_pay(request):
 
     return HttpResponse('123')
 
+def myhome_orderinfo(request):
+
+
+    return render(request,'myhome/Users/orderinfo.html')
+
