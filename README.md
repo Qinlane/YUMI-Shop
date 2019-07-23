@@ -1,4 +1,4 @@
-# **Shop-uu**
+# *YUMI-Shop**
 
 #### 项目的目录介绍
 
@@ -108,6 +108,8 @@ myadmin_goods
 | addtime   | datetime | not null |        | 6    | 商品添加时间            |
 | cateid_id | int      | not null |        | 11   | 对应myadmin_cates表的id |
 | brand     | varchar  | not null |        | 50   | 品牌名                  |
+| color     | varchar  | not null |        | 50   | 商品颜色                |
+| sizes     | varchar  | not null |        | 50   | 商品尺码                |
 
 
 
@@ -132,55 +134,68 @@ myadmin_users
 
 
 
+myadmin_cart
+
+| 字段名     | 字段类型 | 非空     | 默认值 | 长度 | 描述       |
+| ---------- | -------- | -------- | ------ | ---- | ---------- |
+| id         | int      | not null |        | 11   | 主键，自增 |
+| color      | varchar  | not null |        | 20   | 商品颜色   |
+| sizes      | varchar  | not null |        | 20   | 商品尺码   |
+| num        | int      | not null |        | 11   | 购买数量   |
+| lengths    | int      | not null |        | 11   |            |
+| goodsid_id | int      | not null |        | 11   | 商品id     |
+| uid_id     | int      | not null |        | 11   | 用户id     |
 
 
-（待补充）
 
 myadmin_orders   
 
-| 字段名    | 字段类型 | 非空     | 默认值 | 长度 | 描述       |
-| --------- | -------- | -------- | ------ | ---- | ---------- |
-| id        | int      | not null |        | 11   | 主键，自增 |
-| uid       | int      | not null |        | 11   | 会员ID     |
-| linkman   |          |          |        |      |            |
-| address   |          |          |        |      |            |
-| code      |          |          |        |      |            |
-| phone     |          |          |        |      |            |
-| ordertime |          |          |        |      |            |
-| total     |          |          |        |      |            |
-| status    |          |          |        |      |            |
-| addtime   |          |          |        |      |            |
+| 字段名     | 字段类型 | 非空     | 默认值 | 长度 | 描述                     |
+| ---------- | -------- | -------- | ------ | ---- | ------------------------ |
+| id         | int      | not null |        | 11   | 主键，自增               |
+| uid_id     | int      | not null |        | 11   | 会员Ius                  |
+| username   | varchar  | not null |        | 20   | 会员名                   |
+| address    | varchar  | not null |        | 255  | 收获地址                 |
+| phone      | varchar  | not null |        | 11   | 手机号码                 |
+| totalprice | double   | not null |        | 0    | 总价格                   |
+| paytype    | int      | not null |        | 11   | 支付方式                 |
+| addtime    | datatime | not null |        | 6    | 下单时间                 |
+| paytime    | datatime | not null |        | 6    | 支付时间                 |
+| status     | int      | not null |        | 11   | 0:未支付  1:已支付   ... |
 
 
 
-myadmin_detail
+myadmin_orderinfo
 
-| 字段名  | 字段类型 | 非空     | 默认值 | 长度 | 描述       |
-| ------- | -------- | -------- | ------ | ---- | ---------- |
-| id      | int      | not null |        | 11   | 主键，自增 |
-| orderid |          |          |        |      |            |
-| goodsid |          |          |        |      |            |
-| name    |          |          |        |      |            |
-| price   |          |          |        |      |            |
-| num     |          |          |        |      |            |
-| addtime |          |          |        |      |            |
+| 字段名     | 字段类型 | 非空     | 默认值 | 长度 | 描述       |
+| ---------- | -------- | -------- | ------ | ---- | ---------- |
+| id         | int      | not null |        | 11   | 主键，自增 |
+| num        | int      | not null |        | 11   | 商品数量   |
+| goodsid_id | int      | not null |        | 11   | 商品id     |
+| order_id   | int      | not null |        | 11   | 订单id     |
 
 
 
-#### 功能分配
+myadmin_address
 
-| 姓名   | 所做模块                                | 组长 |
-| ------ | --------------------------------------- | ---- |
-| 钱兆烺 | 后台，购物车，订单模块,详情页模块       | 是   |
-| 潘利鹏 | 前台 ，个人中心模块，登陆（前后台）模块 |      |
+| 字段名  | 字段类型 | 非空     | 默认值 | 长度 | 描述                       |
+| ------- | -------- | -------- | ------ | ---- | -------------------------- |
+| id      | int      | not null |        | 11   | 主键，自增                 |
+| uid     | int      | not null |        | 11   | 登陆的用户id               |
+| name    | varchar  | not null |        | 20   | 收货人名字                 |
+| address | varchar  | not null |        | 255  | 收货地址                   |
+| phone   | varchar  | not null |        | 11   | 收获手机号                 |
+| status  | int      | not null |        | 11   | 0：默认地址  1：非默认地址 |
 
 
 
-#### 使用说明
+myadmin_collect
 
-1. xxxx
-2. xxxx
-3. xxxx
+| 字段名 | 字段类型 | 非空     | 默认值 | 长度 | 描述       |
+| ------ | -------- | -------- | ------ | ---- | ---------- |
+| id     | int      | not null |        | 11   | 主键，自增 |
+| uid    | int      | not null |        | 11   | 用户id     |
+| sid    | int      | not null |        | 11   | 商品id     |
 
 
 
