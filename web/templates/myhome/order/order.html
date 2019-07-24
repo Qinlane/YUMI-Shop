@@ -240,7 +240,7 @@
                     // 发送AJAX 加入购物车
                 $.get('{% url 'myhome_order_create' %}',data,function(data){
                     alert(data.msg);
-                    location.href="/order/pay/?orderid="+(data.oid);
+                    location.href="/orderinfo/?orderid="+(data.oid);
 
                 },'json')
             }

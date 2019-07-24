@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . views import IndexViews,UsersViews,CatesViews,GoodsViews
+from . views import IndexViews,UsersViews,CatesViews,GoodsViews,CenterViews
 
 urlpatterns = [
     url(r'^index/$',IndexViews.index,name="myadmin_index"),
@@ -31,6 +31,10 @@ urlpatterns = [
     url(r'^goods/edit/$',GoodsViews.goods_edit,name="myadmin_goods_edit"),
     url(r'^goods/del/$',GoodsViews.goods_del,name="myadmin_goods_del"),
 
+    # 订单管理
+    url(r'^center/index/$',CenterViews.center_index,name="myadmin_center_index"),
+    url(r'^center/erit/$',CenterViews.center_edit,name="myadmin_center_edit"),
+  
+
     
 ]   
- 

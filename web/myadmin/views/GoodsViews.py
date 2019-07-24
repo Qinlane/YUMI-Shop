@@ -78,7 +78,6 @@ def goods_edit(request):
     # 获取当前用户的对象
     ob = Goods.objects.get(id=uid)
 
-    print(ob.brand)
     # 判断当前的请求方式
     if request.method == 'POST':
         # 执行更新操作

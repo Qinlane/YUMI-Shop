@@ -1,0 +1,124 @@
+{% extends 'myadmin/index.html' %}
+
+{% block title %}
+<title>商品订单编辑</title>
+{% endblock %}
+
+
+{% block con %}
+
+<link href="/static/myadmin/assets/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>商品订单编辑</h3>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+                <form class="form-horizontal form-label-left "
+                action="{% url 'myadmin_goods_edit' %}?uid={{uinfo.id}}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <span class="section">商品订单修改</span>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">收货人
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="username" class="form-control col-md-7 col-xs-12"
+                                data-validate-length-range="6" data-validate-words="2" placeholder="收货人"
+                                required="required"  value="{{ uinfo.username}}">
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">手机号 
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="phone" required="required" class="form-control col-md-7 col-xs-12"
+                                placeholder="手机号"  value="{{ uinfo.phone}}">
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">收货地址 
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="address" required="required" class="form-control col-md-7 col-xs-12"
+                               data-validate-length-range="6" data-validate-words="2" placeholder="收货地址" value="{{ uinfo.address }}">
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">订单总价
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="totalprice" required="required" class="form-control col-md-7 col-xs-12"
+                               data-validate-length-range="6" data-validate-words="2" placeholder="订单总价（元）" value="{{ uinfo.totalprice }}">
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">支付状态 
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="status" required="required" class="form-control col-md-7 col-xs-12"
+                               data-validate-length-range="6" data-validate-words="2" placeholder="支付状态(0：未支付，1：已支付)" value="{{ uinfo.status }}">
+                            <span>支付状态 (0：未支付 1：已支付)</span>
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">支付方式 
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="paytype" required="required"
+                                class="form-control col-md-7 col-xs-12" placeholder="支付方式(0：支付宝，1：微信)" value="{{ uinfo.paytype}}">
+                            <span>支付方式  (0：支付宝  1：微信)</span>
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">下单时间 <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="addtime" required="required" 
+                                    class="form-control col-md-7 col-xs-12" placeholder="下单时间" value="{{ uinfo.addtime }}">
+                            </div>
+                        </div>
+                    
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">支付时间 
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="paytime" required="required"
+                                class="form-control col-md-7 col-xs-12" placeholder="支付时间" value="{{ uinfo.paytime}}">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button id="send" type="submit" class="btn  btn-primary">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

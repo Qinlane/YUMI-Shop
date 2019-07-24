@@ -77,3 +77,4 @@ class OrderInfo(models.Model):
     orderid = models.ForeignKey(to="Order",to_field="id",on_delete=models.CASCADE)
     goodsid = models.ForeignKey(to="Goods",to_field="id",on_delete=models.CASCADE)
     num = models.IntegerField()
+    price = models.FloatField()
