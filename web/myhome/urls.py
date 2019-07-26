@@ -96,4 +96,8 @@ urlpatterns = [
     url(r'^order/confirm/',OrderViews.myhome_order_confirm,name="myhome_order_confirm"),
     url(r'^order/create/',OrderViews.myhome_order_create,name="myhome_order_create"),
     url(r'^order/pay/',OrderViews.myhome_order_pay,name="myhome_order_pay"),
+    url(r'^order/pay/success/',OrderViews.myhome_order_paysuccess,name="myhome_order_paysuccess"),
+
+    # 支付回调地址
+    url(r'^order/pay_result/$',OrderViews.myhome_pay_result,name="myhome_pay_result"),
 ]

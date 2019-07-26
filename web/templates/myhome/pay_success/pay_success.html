@@ -1,0 +1,54 @@
+{% extends 'myhome/index.html' %}
+
+{% block title %}
+<title>订单支付成功</title>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/myhome/theme/css/allstyle.css">
+
+
+{% endblock %}
+
+{% block ordertop %}
+<div class="container clearfix">
+    <div class="header-logo fl" style="width:212px;">
+        <h1><a href="{% url 'myhome_index' %}"><img src="/static/myhome/theme/icon/logo.png" height="70"></a></h1>
+    </div>
+    <div class="pc-order-titlei fl" style="margin-top:5px;">
+        <h2>订单支付成功！</h2>
+    </div>
+    <div class="pc-step-title fl">
+        <ul>
+            <li class="cur2"><a href="#">1 . 我的购物车</a></li>
+            <li class="cur2"><a href="#">2 . 填写核对订单</a></li>
+            <li class="cur"><a href="#">3 . 成功提交订单</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block yHeader %}
+
+{% endblock %}
+
+{% block banner %}
+{% endblock %}
+
+{% block con %}
+<!-- 页面内容 -->
+<section>
+    <div class="containers">
+        <div class="clearfix">
+            <div class="fr pc-list-t">
+                
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block jsbanner %}
+{% endblock %}

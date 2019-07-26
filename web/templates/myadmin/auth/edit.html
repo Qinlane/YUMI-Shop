@@ -1,0 +1,153 @@
+{% extends 'myadmin/index.html' %}
+
+{% block title %}
+<title>后台管理员修改</title>
+{% endblock %}
+
+
+{% block con %}
+<link href="/static/myadmin/assets/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>管理员信息修改</h3>
+        </div>
+
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+
+                <form class="form-horizontal form-label-left " action="{% url 'myadmin_authuser_edit' %}?uid={{ uinfo.id }}" id="myform"
+                    method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <span class="section">管理员信息修改</span>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">用户名 <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input name="username" class="form-control col-md-7 col-xs-12"
+                                data-validate-length-range="6" data-validate-words="2" placeholder="请输入用户名"
+                                required="required" type="text" value="{{ uinfo.username }}">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">密码 <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input name="password" class="form-control col-md-7 col-xs-12"
+                                data-validate-length-range="6" data-validate-words="2" placeholder="如果不需要修改密码,则不用填写"
+                                 type="password" >
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="email" name="email" required="required" class="form-control col-md-7 col-xs-12"
+                                placeholder="请输入email" value="{{ uinfo.email}}">
+                        </div>
+                    </div>
+
+                    <div class="item form-group ">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            分配组 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12 allp">
+                            <div style="float: left;text-align: center;">
+                                <p>可用 组</p>
+                                <select class="select1" multiple="multiple"
+                                    style="width:300px;height:200px; float:left; border:1px solid rgba(255, 255, 255, 0.2); margin:5px; ">
+                                    {% for v in grouplist %}
+                                    <option value="{{ v.id }}">{{ v.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <p><button id="add_all" class="btn  btn-success" type="button">全选&nbsp;&gt;</button></p>
+                            </div>
+
+                            <div style="float: left;width: 50px;height:200px;">
+                                <ul style="margin-top: 100px;padding:0;text-align: center;list-style: none;">
+                                    <li><button id="add" class="btn btn-success" type="button">&gt;</button></li>
+                                    <br>
+                                    <li><button id="remove" class="btn  btn-success" type="button">&lt;</button></li>
+                                </ul>
+                            </div>
+
+                            <div style="float: left;text-align: center;">
+                                <p>已选中的 组</p>
+                                <select name="gs" class="select2" multiple="multiple"
+                                    style="width:300px;height:200px; float:left; border:1px solid rgba(255, 255, 255, 0.2); margin:5px; ">
+                                    {% for v in  uinfo.groups.all %}                                    
+                                    <option value="{{ v.id }}">{{ v }}</option>
+                                    {% endfor %}
+                                </select>
+                                <p><button id="remove_all" class="btn  btn-success" type="button">全部移除</button></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script type="text/javascript">
+                        $('#add').click(function () {
+                            $('.select1 option:selected').appendTo('.select2');
+                        })
+                        $('#remove').click(function () {
+                            $('.select2 option:selected').appendTo('.select1');
+                        })
+                        $('#add_all').click(function () {
+                            $('.select1 option').appendTo('.select2');
+                        })
+                        $('#remove_all').click(function () {
+                            $('.select2 option').appendTo('.select1');
+                        })
+                        $('.select1').dblclick(function () {
+                            $('option:selected', this).appendTo('.select2');
+                        })
+                        $('.select2').dblclick(function () {
+                            $('option:selected', this).appendTo('.select1');
+                        })
+
+                        $('#myform').submit(function () {
+
+                            // $('.select2 option').attr('selected',true) //X
+                            $('.select2 option').prop('selected', true)
+
+                            // return false;
+                        })
+                    </script>
+
+
+                    <br>
+                    <br>
+                    <br>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button id="send" type="submit" class="btn  btn-primary" >提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

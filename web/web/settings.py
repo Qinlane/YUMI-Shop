@@ -142,3 +142,31 @@ EMAIL_HOST_PASSWORD = 'qrxoxjavwmosgcih'  # 授权码
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 EMAIL_USE_TLS = False
+
+
+# 支付宝配置文件
+
+# APPID
+# 沙箱APPID，生产环境须更改为应用APPID。
+ALIPAY_APPID = "2016100200644612" 
+
+# 网关
+# 沙箱网关，生产环境须更改为正式网关。
+ALIPAY_URL = "https://openapi.alipaydev.com/gateway.do" 
+# 正式网关，开发环境勿使用。
+# ALIPAY_URL = "https://openapi.alipay.com/gateway.do" 
+
+# 回调通知地址
+# 如果只可以内网访问开发服务器
+ALIPAY_NOTIFY_URL = "http://scongh.uicp.io/order/pay_result/" 
+# 如果生产环境或外网可以访问开发服务器
+# ALIPAY_NOTIFY_URL = "http://1.203.45.678:8000/order/pay_result/" 
+
+# 支付后的跳转地址
+# ALIPAY_RETURN_URL = 'http://127.0.0.1:8000/order/pay_success/'
+ALIPAY_RETURN_URL = 'http://scongh.uicp.io/'
+
+# 应用私钥
+APP_PRIVATE_KEY_PATH = os.path.join(BASE_DIR, 'keys/app_private_key.txt')
+# 支付宝公钥
+ALIPAY_PUBLIC_KEY_PATH = os.path.join(BASE_DIR, 'keys/alipay_public_key.txt')

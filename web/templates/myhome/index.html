@@ -104,10 +104,10 @@
                     <div class="righton">
                         <li class="header-cart">
                             <a href="{% url 'myhome_cart_index' %}">
-                                <i class="icon-gouwuche"></i>
+                                {% comment %} <i class="icon-gouwuche"></i> {% endcomment %}
                                 我的购物车
                             </a>
-                            <!-- <i class="head-amount">99</i> -->
+                             {% comment %} <i class="head-amount">99</i> {% endcomment %}
                         </li>
                         <li class="headerul">|</li>
                         <li><a href="{% url 'myhome_collect' %}">我的收藏</a> </li>
