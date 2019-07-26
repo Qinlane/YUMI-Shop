@@ -71,9 +71,14 @@
                                     <!-- 自动登录开始fore4 -->
                                     <div class="item item-fore4">
                                         <div class="safe">
-                                            <span>
+                                            <span style="float: left">
                                                 <input type="checkbox" name="chkRememberMe" id="autologin" tabindex="3">
                                                 <label for>自动登录</label>
+                                            </span>
+                                            <span>
+                                                <a href="{% url 'github_login' %}">
+                                                    <img src="/static/myhome/theme/img/login/tmg.jpg" width="15px" height="15px">github登陆
+                                                </a>
                                             </span>
                                             <span class="forget-pw-safe">
                                                 <a href="">忘记密码</a>

@@ -18,7 +18,9 @@ urlpatterns = [
     url(r'^isphone/',LoginViews.isphone,name="isphone"),
     # 退出登录
     url(r'^logout/',LoginViews.myhome_logout,name="myhome_logout"),
-
+    # 第三方登录
+    url(r'github_login', LoginViews.git_login, name='github_login'),
+    url(r'github_check', LoginViews.git_check, name='github_check'),
 
     # 注册
     url(r'^register/',LoginViews.myhome_register,name="myhome_register"),

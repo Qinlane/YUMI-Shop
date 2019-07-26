@@ -4,9 +4,12 @@ from .. models import Cates,Goods,Cart,Users,Order,OrderInfo
 from django.urls import reverse
 # 导入分页类
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import permission_required
+
 # Create your views here.
 
 # 订单管理列表
+@permission_required('myadmin_show_Order',raise_exception=True)
 def center_index(request):
     # 获取数据
     data = Order.objects.all()
@@ -35,6 +38,7 @@ def center_index(request):
     return render(request,'myadmin/center/index.html',context)
 
 # 订单修改
+@permission_required('myadmin_create_Order',raise_exception=True)
 def center_edit(request):
 
     # 接收用户id

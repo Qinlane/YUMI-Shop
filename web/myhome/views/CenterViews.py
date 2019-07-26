@@ -9,7 +9,7 @@ from myhome.models import Address
 def myhome_orderinfo(request):
     # 获取数据
     ob = Order.objects.filter(uid=request.session.get('VipUser')['uid'])
-    print(ob)
+
     context = {'orderdata':ob}
     
     return render(request,'myhome/Users/orderinfo.html',context)

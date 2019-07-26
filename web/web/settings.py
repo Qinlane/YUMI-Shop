@@ -142,3 +142,22 @@ EMAIL_HOST_PASSWORD = 'qrxoxjavwmosgcih'  # 授权码
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 EMAIL_USE_TLS = False
+
+#github
+GITHUB_APP_ID = '61d77c3d601b6419831f'
+
+GITHUB_KEY = '78131ce6ba83d1590f618d2ae3515afb57f8aa0a'
+
+GITHUB_CALLBACK_URL = 'http://127.0.0.1:8000/github_check'  #回调地址
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"

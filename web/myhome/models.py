@@ -15,3 +15,9 @@ class Collect(models.Model):
     uid = models.IntegerField()
     sid = models.IntegerField()
 # Create your models here.
+
+# 第三方登录用户信息模型
+class OAuth_ex(models.Model):
+    type = models.IntegerField(default=1)  # 1状态为github登录
+    user = models.ForeignKey(Users)
+    openid = models.CharField(max_length=100, default='')

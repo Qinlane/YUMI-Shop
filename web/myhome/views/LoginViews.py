@@ -1,7 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponse,JsonResponse
+from django.shortcuts import render,render_to_response
+from django.http import HttpResponse,JsonResponse,HttpResponseRedirect
 from django.contrib.auth.hashers import make_password,check_password
 from myadmin.models import Users
+import urllib
+from web import settings
+from myadmin.models import Users
+from myhome.models import OAuth_ex
+from . oauth_client import OAuth_GITHUB
 
 # 显示登陆页面
 def myhome_login(request):
@@ -110,3 +115,62 @@ def isphone(request):
         return JsonResponse({'res':1})
     else:
         return JsonResponse({'res':0})
+
+
+def git_login(request):   #获取code
+    oauth_git = OAuth_GITHUB(settings.GITHUB_APP_ID,settings.GITHUB_KEY,settings.GITHUB_CALLBACK_URL)
+    url = oauth_git.get_auth_url()
+    return HttpResponseRedirect(url)
+
+def git_check(request):
+    import time
+    type='1'
+    request_code = request.GET.get('code')
+    print(request_code)
+    oauth_git = OAuth_GITHUB(settings.GITHUB_APP_ID,settings.GITHUB_KEY,settings.GITHUB_CALLBACK_URL)
+    try:
+        access_token = oauth_git.get_access_token(request_code)   #获取access token
+        time.sleep(0.1)    #此处需要休息一下，避免发送urlopen的10060错误
+    except:  #获取令牌失败，反馈失败信息
+        return HttpResponse('<script>alert("授权失败，返回登录页面");location.href="/login/";</script>')
+    infos = oauth_git.get_user_info()   #获取用户信息
+    nickname = infos.get('login','')
+    image_url = infos.get('avatar_url','')
+    open_id = str(oauth_git.openid)
+    sex = '1'
+    filename = '' + image_url.split('/')[-1]
+    filename = filename.split('?')[0]
+    filename = filename + '.jpg'
+    pic_url = '/static/uploads/userpic/' + filename
+    githubs = OAuth_ex.objects.filter(openid=open_id,type=type) #查询是否该第三方账户已绑定本网站账号
+    if githubs:   #若已绑定，直接登录
+        oauth_init = OAuth_ex.objects.get(openid=open_id,type=type)
+        ob = Users.objects.get(id = oauth_init.user.id)
+        request.session['VipUser'] = {'uid': ob.id, 'nikename': ob.nikename, 'pic_url': ob.pic_url}
+        return render(request,'myhome/index.html')
+    email = oauth_git.get_email()
+    users = Users.objects.filter(email=email)   #若获取到邮箱，则查询是否存在本站用户
+    if users:   #若存在，则直接绑定
+        user = users[0]
+    else:   #若不存在，则新建本站用户
+        while Users.objects.filter(nikename=nickname):   #防止用户名重复
+            nickname = nickname + '*'
+        password = '123456'
+        user = Users(nikename=nickname,email=email,sex=sex,password=make_password(password, None, 'pbkdf2_sha256'),pic_url=pic_url)
+        down_picture(image_url) #下载用户头像图片
+        user.save()
+    oauth_ex = OAuth_ex(user = user,openid = open_id,type=type)
+    oauth_ex.save()    #保存后登陆
+    oauth_init = OAuth_ex.objects.get(openid=open_id, type=type)
+    ob = Users.objects.get(id=oauth_init.user.id)
+    request.session['VipUser'] = {'uid': ob.id, 'nikename': nickname, 'pic_url': ob.pic_url}
+    return render(request,'myhome/index.html')
+
+# 下载图片
+def down_picture(pic_url):
+    url = pic_url  # 图片路径。
+    filename = '' + pic_url.split('/')[-1]
+    filename = filename.split('?')[0]
+    filename = filename + '.jpg'
+    dir = settings.BASE_DIR+'/static/uploads/userpic/'  # 当前工作目录。
+    urllib.request.urlretrieve(url, dir + filename )  # 下载图片。
