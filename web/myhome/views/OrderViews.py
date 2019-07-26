@@ -4,6 +4,7 @@ from django.urls import reverse
 from myadmin.models import Cates,Goods,Cart,Users,Order,OrderInfo
 from myhome.models import Address
 
+
 # Create your views here.
 
 
@@ -13,8 +14,7 @@ def myhome_order_confirm(request):
     # 获取选择的购物车 id
     cartidstr = request.GET.get('cartids')
     cartids = cartidstr.split(',')
-
-    # 获取用户收货地址
+    print(cartids)
 
     # 把当前选择的购物车数据查询处理
     data = Cart.objects.filter(id__in=cartids)
@@ -46,6 +46,7 @@ def myhome_order_create(request):
         obinfo.orderid = ob
         obinfo.goodsid = x.goodsid
         obinfo.num = x.num
+        obinfo.price = x.goodsid.price
         obinfo.save()
         # 计算总价
         totalprice += x.num*x.goodsid.price
@@ -67,8 +68,5 @@ def myhome_order_pay(request):
 
     return HttpResponse('123')
 
-def myhome_orderinfo(request):
 
-
-    return render(request,'myhome/Users/orderinfo.html')
 

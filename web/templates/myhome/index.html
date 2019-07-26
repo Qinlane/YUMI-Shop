@@ -91,7 +91,7 @@
 
                     <li><a href="{% url 'myhome_personal' %}" class="ci2"><img src="/static/myhome/theme/icon/user-x.png" height="20"
                                 style="margin-top:6px;" alt=""></a></li>
-                    <li><a href="{% url 'myhome_personal' %}">{{ request.session.VipUser.nikename }}</a></li>
+                    <li><a href="{% url 'myhome_personal' %}" target="_blank" >{{ request.session.VipUser.nikename }}</a></li>
                     <li class="headerul">|</li>
                     <li><a href="{% url 'myhome_logout' %}" style="color:#ea4949;">退出登录</a> </li>
                     {% else %}
@@ -101,28 +101,24 @@
                         <li><a href="{% url 'myhome_register' %}" target="_blank" >免费注册</a> </li>
                     </div>
                     {% endif %}
-                    <!-- <li class="headerul">|</li> -->
-                    <!-- <li><a href="{% url 'myhome_register' %}">免费注册</a> </li> -->
                     <div class="righton">
                         <li class="header-cart">
                             <a href="{% url 'myhome_cart_index' %}">
                                 <i class="icon-gouwuche"></i>
                                 我的购物车
                             </a>
-                            <!-- <i class="head-amount">99</i> -->
+                             <i class="head-amount">99</i>
                         </li>
                         <li class="headerul">|</li>
-                        <li><a href="my-d.html" target="_blank">订单查询</a> </li>
+                        <li><a href="{% url 'myhome_collect' %}">我的收藏</a> </li>
                         <li class="headerul">|</li>
-                        <li><a href="my-s.html">我的收藏</a> </li>
-                        <li class="headerul">|</li>
-                        <li id="pc-nav" class="menu"><a href="my-user.html" class="tit">我的商城</a>
+                        <li id="pc-nav" class="menu"><a href="javascript:void(0)" class="tit">我的商城</a>
                             <div class="subnav">
-                                <a href="my-d.html">我的订单</a>
-                                <a href="my-s.html">我的收藏</a>
-                                <a href="my-user.html">账户安全</a>
-                                <a href="my-add.html">地址管理</a>
-                                <a href="my-p.html">我要评价</a>
+                                <a href="{% url 'myhome_order_create' %}">我的订单</a>
+                                <a href="{% url 'myhome_collect' %}">我的收藏</a>
+                                <a href="{% url 'myhome_safety' %}">账户安全</a>
+                                <a href="{% url 'myhome_address' %}">地址管理</a>
+                                <a href="javascript:void(0)">我要评价</a>
                             </div>
                         </li>
 

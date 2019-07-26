@@ -4,9 +4,9 @@ from .. models import Cates
 from django.urls import reverse
 # 导入分页类
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import permission_required
+
 # Create your views here.
-
-
 
 
 def get_cates_all(request):
@@ -38,6 +38,7 @@ def get_cates_all(request):
     return data
 
 # 分类列表
+@permission_required('myadmin.show_Cates',raise_exception=True)
 def cate_list(request):
     data=get_cates_all(request)
     # data = Cates.objects.all()
@@ -56,6 +57,7 @@ def cate_list(request):
     return render(request,'myadmin/cates/index.html',context)
 
 # 分类添加
+@permission_required('myadmin.create_Cates',raise_exception=True)
 def cate_add(request):
     if request.method == 'POST':
         # 接收数据

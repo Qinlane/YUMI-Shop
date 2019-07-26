@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from django.core.paginator import Paginator
-
+from web.settings import BASE_DIR
 from .CatesViews import get_cates_all
-from .UsersViews import uploads_pic
 from .. models import Cates, Goods
+from django.contrib.auth.decorators import permission_required
+
 
 # Create your views here.
 
-
+@permission_required('myadmin_show_Goods',raise_exception=True)
 def goods_index(request):
     # 获取当前所有的商品数据
     data=Goods.objects.all()
@@ -39,7 +40,7 @@ def goods_index(request):
     # 加载模板
     return render(request,'myadmin/goods/index.html',context)
 
-
+@permission_required('myadmin_create_Goods',raise_exception=True)
 def goods_insert(request):
     try:
         data = request.POST.dict()
@@ -62,7 +63,7 @@ def goods_insert(request):
 
     return HttpResponse('<script>alert("商品添加失败!");history.back(-1);</script>')
 
-
+@permission_required('myadmin_create_Goods',raise_exception=True)
 def goods_add(request):
 
      # 获取当前所有的分类数据
@@ -72,13 +73,13 @@ def goods_add(request):
     # 加载模板
     return render(request, 'myadmin/goods/add.html', context)
 
+@permission_required('myadmin_create_Goods',raise_exception=True)
 def goods_edit(request):
     # 接收用户id
     uid = request.GET.get('uid')
     # 获取当前用户的对象
     ob = Goods.objects.get(id=uid)
 
-    print(ob.brand)
     # 判断当前的请求方式
     if request.method == 'POST':
         # 执行更新操作
@@ -113,6 +114,7 @@ def goods_edit(request):
         return render(request,'myadmin/goods/edit.html',context)
 
 # 删除
+@permission_required('myadmin_create_Goods',raise_exception=True)
 def goods_del(request):
     # 接收数据
     cid = request.GET.get('cid')
@@ -131,3 +133,16 @@ def goods_del(request):
     ob = Goods.objects.get(id=cid)
     ob.delete()
     return JsonResponse({'msg':'删除成功','code':0})
+
+# 处理头像上传代码
+def uploads_pic(myfile):
+    try:
+        import time
+        filename = str(time.time())+"."+myfile.name.split('.').pop()
+        destination = open(BASE_DIR+"/static/uploads/commodity/"+filename,"wb+")
+        for chunk in myfile.chunks():      # 分块写入文件
+            destination.write(chunk)
+        destination.close()
+        return '/static/uploads/commodity/'+filename
+    except:
+        return False

@@ -1,0 +1,88 @@
+{% extends 'myadmin/index.html' %}
+{% block title %}
+<title>后台权限组列表</title>
+{% endblock %}
+
+{% block con %}
+<link rel="stylesheet" href="/static/myadmin/assets/css/fontcss.css">
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>权限组列表 </h2>
+                <form>
+                <ul class="nav navbar-right panel_toolbox">
+                    <div class="btn-group  btn-group-sm">
+                        <a href="{% url 'myadmin_authgroup_add' %}" class="btn btn-default">新增</a>
+                        <a class="btn btn-default" >删除</a>
+                    </div>
+                </ul>            
+                </form>  
+            </div>
+            
+            <div class="x_content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>用户名</th>
+                            <th>当前组人数</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for v in groupdata %}
+
+                        <tr class="fontcss">
+                            <td scope="row">{{ v.id }}</td>
+                            <td>{{ v.name }}</td>
+                            <td>{{ v.user_set.count }}</td>
+                            <td>
+                                <div>
+                                    <a class="btn btn-xs btn-dark" >
+                                        <i class="fa fa-pencil"></i> 编辑
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+                
+                
+                <div class="btn-group pull-right">
+                    <!-- <button class="btn btn-info" type="button">1</button>
+                    <button class="btn btn-info active" type="button">2</button> -->
+                     <ul class="pagination">
+                        {% load pagetag %}
+    
+                        {% ShowsPage groupdata.paginator.num_pages request%}
+                     </ul> 
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    $('.select-status').change(function () {
+        // 获取当前的元素的值
+        var status = $(this).val()
+        // 获取当前元素的 id
+        var uid = $(this).attr('uid')
+
+        //发送ajax请求
+        $.get('{%url 'myadmin_user_set_status'%}', {
+                'uid': uid,
+                'status': status
+            },
+            function (data) {
+                if (data['code'] == 0) {
+                    alert(data['msg'])
+                }
+            }, 'json')
+    })
+</script>
+{% endblock %}

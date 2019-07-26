@@ -1,0 +1,118 @@
+{% extends 'myadmin/index.html' %}
+{% block title %}
+<title>商品订单管理</title>
+{% endblock %}
+
+{% block con %}
+<link rel="stylesheet" href="/static/myadmin/assets/css/fontcss.css">
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>商品订单管理 </h2>
+                <br>
+                <form>
+                <div class="nav navbar-right panel_toolbox">
+                    <div class=" col-md-3 col-sm-12 col-xs-12 form-group form-group pull-right top_search">
+                        <div class="input-group">
+                            <input type="text" name="keywords" value="{{ request.GET.keywords }}" class="form-control" 
+                            placeholder="搜索...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Go!</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-9 col-xs-12 pull-right">
+                        <select class="form-control" name="types" data-am-selected="{btnSize: 'sm'}" >
+                            <option value="all" {% if request.GET.types == 'all' %} selected {% endif %}>全局搜索</option>
+                            <option value="id" {% if request.GET.types == 'id' %} selected {% endif %}>订单号</option>
+                            <option value="username" {% if request.GET.types == 'username' %} selected {% endif %}>名字</option>
+                            <option value="phone" {% if request.GET.types == 'phone' %} selected {% endif %}>手机号</option>
+                            <option value="address" {% if request.GET.types == 'address' %} selected {% endif %}>收货地址</option>
+                            <option value="phone" {% if request.GET.types == 'phone' %} selected {% endif %}>手机号</option>
+                            <option value="addtime" {% if request.GET.types == 'addtime' %} selected {% endif %}>下单时间</option>
+                        </select>
+                    </div>  
+                </div>
+                </form>  
+            </div>
+            <span class="pull-left" style="color:#ccc;">双击订单管理名可进行修改</span>
+            <div class="x_content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>收货人</th>
+                            <th>手机号</th>
+                            <th style="margin-right:10px;">收货地址</th>
+                            <th>订单总价</th>
+                            <th>支付状态</th>
+                            <th>支付方式</th>
+                            <th>下单时间</th>
+                            <th>支付时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for v in cardata %}
+
+                        <tr>
+                            <td>{{ v.id }}</td>
+                            <td>{{ v.username }}</td>
+                            <td style="width:160px;">{{ v.phone }}</td>
+                            <td style="width:180px;margin-right:10px;">{{ v.address }}</td>
+                            <td>￥{{ v.totalprice }}</td>
+                            <td>
+                                {% if v.status == 0 %}
+                                    未支付
+                                {% elif v.status == 1 %}
+                                    已支付
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if v.paytype == 0 %}
+                                    支付宝
+                                {% elif v.status == 1 %}
+                                    微信
+                                {% endif %}
+                            </td>
+                            <td style="width:160px;">{{ v.addtime }}</td>
+                            <td style="width:160px;">{{ v.paytime }}</td>
+                            <td>
+                                <div>
+                                    <a class="btn btn-xs btn-dark" href="{% url 'myadmin_center_edit' %}?uid={{ v.id }}">
+                                        <i class="fa fa-pencil"></i> 修改
+                                    </a>
+                                    <a class="removeCate btn btn-xs btn-danger" cid="{{ v.id }}" href="javascript:void(0)">
+                                        <i class="fa fa-trash"></i> 删除
+                                    </a>
+                                </div>
+                            </td>
+                            
+
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+                
+                
+                <div class="btn-group pull-right">
+                    <!-- <button class="btn btn-info" type="button">1</button>
+                    <button class="btn btn-info active" type="button">2</button> -->
+                    <ul class="pagination">
+                        {% load pagetag %}
+
+                        {% ShowsPage cardata.paginator.num_pages request%}
+                    </ul>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+</script>
+{% endblock %}

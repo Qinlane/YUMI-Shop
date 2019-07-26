@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . views import IndexViews,LoginViews,CartViews,PersonalViews,OrderViews
+from . views import IndexViews,LoginViews,CartViews,PersonalViews,OrderViews,CenterViews
 
 
 urlpatterns = [
@@ -18,7 +18,9 @@ urlpatterns = [
     url(r'^isphone/',LoginViews.isphone,name="isphone"),
     # 退出登录
     url(r'^logout/',LoginViews.myhome_logout,name="myhome_logout"),
-
+    # 第三方登录
+    url(r'github_login', LoginViews.git_login, name='github_login'),
+    url(r'github_check', LoginViews.git_check, name='github_check'),
 
     # 注册
     url(r'^register/',LoginViews.myhome_register,name="myhome_register"),
@@ -90,7 +92,8 @@ urlpatterns = [
     url(r'^cart/edit/',CartViews.myhome_cart_edit,name="myhome_cart_edit"),
     
     # 订单管理
-    url(r'^orderinfo/$',OrderViews.myhome_orderinfo,name="myhome_orderinfo"),
+    url(r'^orderinfo/$',CenterViews.myhome_orderinfo,name="myhome_orderinfo"),
+
     # 订单
     url(r'^order/confirm/',OrderViews.myhome_order_confirm,name="myhome_order_confirm"),
     url(r'^order/create/',OrderViews.myhome_order_create,name="myhome_order_create"),

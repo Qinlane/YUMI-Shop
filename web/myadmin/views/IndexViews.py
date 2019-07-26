@@ -1,13 +1,167 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from myadmin.models import Users
+from django.core.paginator import Paginator
+from django.contrib.auth.models import User,Permission,Group
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.hashers import make_password, check_password
+
 
 
 # Create your views here.
-
 def index(request):
     
     return render(request,'myadmin/index.html')
+
+# 权限管理 管理员列表
+@permission_required('auth.add_group',raise_exception=True)
+def myadmin_authuser_index(request):
+    # 获取当前已经创建的所有 组
+    data = User.objects.all()
+    # 实例化分页类
+    p = Paginator(data,10) 
+
+    # 获取当前的页码数
+    pageindex=request.GET.get('page',1)
+
+    # 获取当前页的数据
+    userlist=p.page(pageindex)
+
+    # 分配数据
+    context = {'userdata':userlist}
+    return render(request,'myadmin/auth/index.html',context)
+
+# 权限管理 管理员添加
+@permission_required('auth.add_group',raise_exception=True)
+def myadmin_authuser_add(request):
+    # 获取当前已经创建的所有 组
+    gs = Group.objects.all()
+    # 分配数据
+    context = {'grouplist':gs}
+    return render(request,'myadmin/auth/add.html',context)
+
+
+# 权限管理 执行管理员添加
+@permission_required('auth.add_group',raise_exception=True)
+def myadmin_authuser_insert(request):
+    # 接收数据
+    data = request.POST.dict() 
+    data.pop('csrfmiddlewaretoken')
+    data.pop('gs')
+    # 判断是否为超级会员
+    if data['is_superuser'] == '1':
+        data['is_superuser'] = True
+        # 创建超级管理员
+        ob = User.objects.create_superuser(**data)
+    else:
+        # 创建管理员
+        ob = User.objects.create_user(**data)
+
+    # 判断是否给当前用户分配了组
+    gs = request.POST.getlist('gs')
+    if gs:
+        # 给当前管理员设置组
+        ob.groups.set(gs)
+        ob.save()
+
+    return HttpResponse('<script>alert("创建成功");location.href="/myadmin/auth/user/index/"</script>')
+
+def myadmin_authuser_edit(request):
+    # 接收用户ID
+    uid = request.GET.get('uid')
+    # 获取当前会员对象
+    ob = User.objects.get(id=uid)
+
+    # 判断当前的请求方式
+    if request.method == 'POST':
+         # 执行更新
+        # 判断密码是否更新
+        password_now=request.POST.get('password',None)
+        if password_now:
+            # 更新密码
+            ob.password=make_password(request.POST['password'],None,'pbkdf2_sha256')
+
+        # 更新其他字段
+        ob.username = request.POST.get('username')
+        ob.email = request.POST.get('email') 
+        # 判断是否有权限组
+        prms = request.POST.getlist('prems',None)
+        # 先清空权限组再添加
+        ob.groups.clear()
+        if prms:
+            ob.groups.set(prms)  
+            
+        ob.save()
+
+        return HttpResponse('<script>alert("修改成功");location.href="/myadmin/auth/user/index/"</script>')
+    else:
+        # 获取当前已经创建的所有 组
+        gs = Group.objects.exclude(user=ob)
+        # 显示编辑表单
+        context={'uinfo':ob,'grouplist':gs}
+        # 加载模板
+        return render(request,'myadmin/auth/edit.html',context)
+
+
+# 权限管理 权限组列表
+@permission_required('auth.add_group',raise_exception=True)
+def myadmin_authgroup_index(request):
+    # 获取所有组
+    groupdata = Group.objects.all()
+    # 实例化分页类
+    p = Paginator(groupdata,10) 
+
+    # 获取当前的页码数
+    pageindex=request.GET.get('page',1)
+
+    # 获取当前页的数据
+    userlist=p.page(pageindex)
+
+    # 分配数据
+    context = {'groupdata':userlist}
+    
+    return render(request,'myadmin/auth/groupindex.html',context)
+
+# 权限管理 权限组添加
+@permission_required('auth.add_group',raise_exception=True)
+def myadmin_authgroup_add(request):
+    # 读取所有权限信息
+    # Permission.objects.all()
+    # 读取所有权限信息,并排除以Can开头的系统默认生成权限
+    perms = Permission.objects.exclude(name__istartswith='Can')
+    # 分配数据
+    context = {'perms':perms}
+    # 加载模板
+    return render(request,'myadmin/auth/groupadd.html',context)
+
+
+# 权限管理 执行权限组添加
+@permission_required('auth.add_group',raise_exception=True)
+def myadmin_authgroup_insert(request):
+    # 接收组名 
+    name = request.POST.get('name')
+    # 创建组
+    g = Group(name = name)
+    g.save()
+    # 给组设置权限
+    prms = request.POST.getlist('prms',None)
+    # 判断是否需要给组添加权限
+    if prms:
+        g.permissions.set(prms)
+        g.save()
+
+    return HttpResponse('<script>alert("组创建成功！");location.href="/myadmin/auth/group/add/"</script>')
+
+@permission_required('auth.add_group',raise_exception=True)
+def myadmin_authgroup_edit(request):
+
+
+    return HttpResponse('<script>alert("组创建成功！");location.href="/myadmin/auth/group/edit/"</script>')
+
+    
+
+
 
 # 登录页
 def myadmin_login(request):
@@ -19,35 +173,24 @@ def myadmin_dologin(request):
     
     # 验证验证码是否正确
     if request.session.get('verifycode').upper()  == request.POST.get('vcode').upper():
-        if request.POST['username']== 'admin' and request.POST['password'] == '123654':
-            request.session['AdminUser']={'username':'admin','uid':10}
+        # 检测用户和密码
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            request.session['AdminUser']={'username':user.username,'uid':user.id}
             return HttpResponse('<script>alert("欢迎登录!");location.href="/myadmin/index/"</script>')
-        else:
-            return HttpResponse('<script>alert("账号或密码错误");location.href="/myadmin/login/"</script>')
+
+        return HttpResponse('<script>alert("账号或密码错误");location.href="/myadmin/login/"</script>')
 
     else:
         return HttpResponse('<script>alert("验证码错误!");location.href="/myadmin/login/"</script>')
    
-
-    # # 验证验证码是否正确
-    # if request.session.get('verifycode').upper()  == request.POST.get('vcode').upper():
-    #     # 验证账号是否存在
-    #     ob = Users.objects.get(nikename=request.POST['nikename'])
-    #     res = check_password(request.POST['password'],ob.password)
-    #     if res:
-    #         # 验证成功
-    #         request.session['AdminUser']={'username':nikename,'uid':}
-    #         return HttpResponse('<script>alert("欢迎登录!");location.href="/myadmin/index/"</script>')
-
-    #     else:
-    #         return HttpResponse('<script>alert("账号或密码错误");location.href="/myadmin/login/"</script>')
-
-    # else:
-    #     return HttpResponse('<script>alert("验证码错误!");location.href="/myadmin/login/"</script>')
-
-
 def myadmin_logout(request):
     del request.session['AdminUser']
+    logout(request)
+ 
 
     return HttpResponse('<script>alert("退出成功!");location.href="/myadmin/login/"</script>')
 

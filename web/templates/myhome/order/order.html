@@ -93,7 +93,7 @@
 
         <div class="pc-space">
             <div class="pc-order-title clearfix">
-                <h3 class="fl">收货人信息</h3>
+                <h3 class="fl">发货方式</h3>
             </div>
             <div class="pc-border">
                 <div class="pc-order-text pc-order-l clearfix">
@@ -240,7 +240,7 @@
                     // 发送AJAX 加入购物车
                 $.get('{% url 'myhome_order_create' %}',data,function(data){
                     alert(data.msg);
-                    location.href="/order/pay/?orderid="+(data.oid);
+                    location.href="/orderinfo/?orderid="+(data.oid);
 
                 },'json')
             }
