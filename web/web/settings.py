@@ -170,3 +170,23 @@ ALIPAY_RETURN_URL = 'http://scongh.uicp.io/'
 APP_PRIVATE_KEY_PATH = os.path.join(BASE_DIR, 'keys/app_private_key.txt')
 # 支付宝公钥
 ALIPAY_PUBLIC_KEY_PATH = os.path.join(BASE_DIR, 'keys/alipay_public_key.txt')
+
+
+#github
+GITHUB_APP_ID = '61d77c3d601b6419831f'
+
+GITHUB_KEY = '78131ce6ba83d1590f618d2ae3515afb57f8aa0a'
+
+GITHUB_CALLBACK_URL = 'http://127.0.0.1:8000/github_check'  #回调地址
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"

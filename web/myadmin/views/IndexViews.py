@@ -90,7 +90,7 @@ def myadmin_authuser_edit(request):
         # 先清空权限组再添加
         ob.groups.clear()
         if gs:
-            ob.groups.set(gs)  
+            ob.groups.set(gs)   
             
         ob.save()
 

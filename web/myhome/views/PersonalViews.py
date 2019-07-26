@@ -229,10 +229,10 @@ def uploads_pic(myfile):
     try:
         import time
         filename = str(time.time())+"."+myfile.name.split('.').pop()
-        destination = open(BASE_DIR+"/static/uploads/"+filename,"wb+")
+        destination = open(BASE_DIR+"/static/uploads/userpic/"+filename,"wb+")
         for chunk in myfile.chunks():      # 分块写入文件
             destination.write(chunk)
         destination.close()
-        return '/static/uploads/'+filename
+        return '/static/uploads/userpic/'+filename
     except:
         return False

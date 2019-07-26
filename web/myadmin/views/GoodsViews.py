@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from django.core.paginator import Paginator
-
+from web.settings import BASE_DIR
 from .CatesViews import get_cates_all
-from .UsersViews import uploads_pic
 from .. models import Cates, Goods
 from django.contrib.auth.decorators import permission_required
 
@@ -134,3 +133,16 @@ def goods_del(request):
     ob = Goods.objects.get(id=cid)
     ob.delete()
     return JsonResponse({'msg':'删除成功','code':0})
+
+# 处理头像上传代码
+def uploads_pic(myfile):
+    try:
+        import time
+        filename = str(time.time())+"."+myfile.name.split('.').pop()
+        destination = open(BASE_DIR+"/static/uploads/commodity/"+filename,"wb+")
+        for chunk in myfile.chunks():      # 分块写入文件
+            destination.write(chunk)
+        destination.close()
+        return '/static/uploads/commodity/'+filename
+    except:
+        return False

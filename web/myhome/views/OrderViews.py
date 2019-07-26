@@ -5,6 +5,7 @@ from myadmin.models import Cates,Goods,Cart,Users,Order,OrderInfo
 from myhome.models import Address
 from django.views.decorators.csrf import csrf_exempt
 
+
 # Create your views here.
 
 
