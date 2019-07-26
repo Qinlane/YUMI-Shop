@@ -177,7 +177,7 @@ GITHUB_APP_ID = '61d77c3d601b6419831f'
 
 GITHUB_KEY = '78131ce6ba83d1590f618d2ae3515afb57f8aa0a'
 
-GITHUB_CALLBACK_URL = 'http://127.0.0.1:8000/github_check'  #回调地址
+GITHUB_CALLBACK_URL = 'http://scongh.uicp.io/github_check'  #回调地址
 
 CACHES = {
     "default": {

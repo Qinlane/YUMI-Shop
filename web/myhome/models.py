@@ -1,5 +1,6 @@
 from django.db import models
-from myadmin.models import Cates,Goods,Cart,Users
+# from myadmin.models import Cates,Goods,Cart,Users
+from myadmin.models import Users
 
 
 # 地址管理模型
@@ -19,5 +20,5 @@ class Collect(models.Model):
 # 第三方登录用户信息模型
 class OAuth_ex(models.Model):
     type = models.IntegerField(default=1)  # 1状态为github登录
-    user = models.ForeignKey(Users)
+    user = models.ForeignKey(Users,on_delete=models.CASCADE)
     openid = models.CharField(max_length=100, default='')

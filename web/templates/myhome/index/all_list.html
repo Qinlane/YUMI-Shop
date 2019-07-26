@@ -23,7 +23,7 @@
         <ul>
         {% for v in alllist %}
             {% for i in v.ssb %}
-            <li><a href="{% url 'myhome_list' i.id %}}">{{ i.name }}</a></li>        
+            <li><a href="{% url 'myhome_list' i.id %}">{{ i.name }}</a></li>        
             {% endfor %}        
         {% endfor %}        
         </ul>

@@ -137,7 +137,7 @@
             <div class="pc-nav-item">
                 <a class="pc-title" href="#">{{ Catesname.name }}</a> &gt; 
                 <a href="#">{{ Cateslist.name }}</a> &gt; 
-                <a href="#">{{ goods.goodsname }}</a>
+                <a href="{% url 'myhome_info' %}?goodsid={{ v.id }}">{{ goods.goodsname }}</a>
             </div>
             <div class="pc-details-l">
                 <div class="pc-product clearfix">

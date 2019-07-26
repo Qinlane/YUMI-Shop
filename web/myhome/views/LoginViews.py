@@ -157,6 +157,7 @@ def git_check(request):
             nickname = nickname + '*'
         password = '123456'
         user = Users(nikename=nickname,email=email,sex=sex,password=make_password(password, None, 'pbkdf2_sha256'),pic_url=pic_url)
+        print(image_url)
         down_picture(image_url) #下载用户头像图片
         user.save()
     oauth_ex = OAuth_ex(user = user,openid = open_id,type=type)
@@ -166,11 +167,12 @@ def git_check(request):
     request.session['VipUser'] = {'uid': ob.id, 'nikename': nickname, 'pic_url': ob.pic_url}
     return render(request,'myhome/index.html')
 
-# 下载图片
+# # 下载图片
 def down_picture(pic_url):
     url = pic_url  # 图片路径。
     filename = '' + pic_url.split('/')[-1]
     filename = filename.split('?')[0]
     filename = filename + '.jpg'
+    print(filename)
     dir = settings.BASE_DIR+'/static/uploads/userpic/'  # 当前工作目录。
     urllib.request.urlretrieve(url, dir + filename )  # 下载图片。
